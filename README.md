@@ -44,21 +44,25 @@ public/                 # webroot Nginx (seul dossier exposé)
 storage/                # hors webroot — base SQLite + images uploadées (non versionné)
 bin/console.php         # création d'utilisateurs en CLI
 scripts/                # sauvegarde, test de fumée
-deploy/                 # scripts de provisionnement serveur (Nginx, PHP-FPM, durcissement)
+deploy/                 # scripts de provisionnement serveur (durcissement, stack, déploiement)
+install.sh              # installation complète en une commande (voir ci-dessous)
 ```
 
 ## Documentation
 
-- [RUNBOOK.md](RUNBOOK.md) — accès, déploiement, sauvegardes, migration vers un autre hébergeur
+- [RUNBOOK.md](RUNBOOK.md) — accès, mises à jour, sauvegardes, migration vers un autre hébergeur
 
-## Déploiement
+## Installation sur un serveur (Debian 13)
 
-Voir [RUNBOOK.md](RUNBOOK.md) pour la procédure complète. En résumé :
+Sur un VPS Debian 13 fraîchement provisionné, avec un nom de domaine pointant déjà dessus :
 
 ```bash
-rsync -az app public bin scripts <utilisateur>@<serveur>:/var/www/asso-stock/
-ssh <utilisateur>@<serveur> 'sudo -u www-data php /var/www/asso-stock/app/migrations/migrate.php'
+git clone https://github.com/bleze88/stock.git
+cd stock
+sudo ./install.sh
 ```
+
+Le script demande le domaine et un e-mail (pour Let's Encrypt), puis enchaîne durcissement système, installation de la stack (Nginx/PHP-FPM/SQLite/Certbot), déploiement de l'application, HTTPS et création du premier compte admin. Les étapes peuvent aussi être lancées séparément (`deploy/00-harden-system.sh`, `deploy/01-install-stack.sh`, `deploy/02-deploy-app.sh`) — voir [RUNBOOK.md](RUNBOOK.md) pour le détail et les mises à jour ultérieures.
 
 ## Développement local
 

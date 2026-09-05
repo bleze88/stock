@@ -6,8 +6,8 @@ export DEBIAN_FRONTEND=noninteractive
 
 echo "== Installation Nginx + PHP-FPM + extensions + Certbot =="
 apt-get update -y
-apt-get install -y nginx php-fpm php-sqlite3 php-gd php-mbstring php-curl \
-    certbot python3-certbot-nginx sqlite3 unzip git
+apt-get install -y nginx php-fpm php-sqlite3 php-gd php-mbstring php-curl php-zip \
+    certbot python3-certbot-nginx sqlite3 unzip git rsync
 
 PHP_VERSION=$(php -v | head -1 | awk '{print $2}' | cut -d. -f1,2)
 echo "PHP version detectee: ${PHP_VERSION}"

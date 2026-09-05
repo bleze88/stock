@@ -2,6 +2,27 @@
 
 Remplacez `<domaine>`, `<ip-serveur>` et `<utilisateur>` par les valeurs de votre propre déploiement.
 
+## Installation initiale (nouveau serveur)
+
+Sur un VPS Debian 13 neuf, avec le DNS du domaine déjà pointé dessus :
+
+```
+ssh -i ~/.ssh/<votre-clé> <utilisateur>@<ip-serveur>
+git clone https://github.com/bleze88/stock.git
+cd stock
+sudo ./install.sh
+```
+
+`install.sh` demande le domaine et un e-mail (pour Let's Encrypt), puis enchaîne :
+1. `deploy/00-harden-system.sh` — pare-feu (ufw), durcissement SSH, fail2ban, mises à jour automatiques, NTP
+2. `deploy/01-install-stack.sh` — Nginx, PHP-FPM, SQLite, Certbot, réglages PHP adaptés à un petit VPS
+3. `deploy/02-deploy-app.sh` — copie du code dans `/var/www/asso-stock/`, config Nginx + HTTPS, migrations de la base, création du premier compte admin
+
+Les trois scripts sont idempotents et peuvent aussi être relancés individuellement (ex: pour ne refaire que le durcissement système, ou re-déployer l'application après un `git pull`). Pour une installation non interactive :
+```
+sudo DOMAIN=stock.exemple.com EMAIL=admin@exemple.com ADMIN_USER=admin ADMIN_NAME="Prénom Nom" ./install.sh
+```
+
 ## Accès
 
 - **Admin système** : utilisateur dédié avec clé SSH et sudo.
