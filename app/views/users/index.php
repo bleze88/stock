@@ -18,11 +18,7 @@
             <td class="table-actions">
                 <a class="btn btn-secondary" href="/index.php?r=users/edit&id=<?= (int)$u['id'] ?>"><?= e(t('common_edit')) ?></a>
                 <?php if ((int)$u['id'] !== $currentAdminId): ?>
-                <form method="post" action="/index.php?r=users/delete" class="inline-form" data-confirm="<?= e(t('users_confirm_delete')) ?>">
-                    <?= csrfField() ?>
-                    <input type="hidden" name="id" value="<?= (int)$u['id'] ?>">
-                    <button type="submit" class="btn btn-secondary btn-danger"><?= e(t('common_delete')) ?></button>
-                </form>
+                <a class="btn btn-secondary btn-danger" href="/index.php?r=users/delete&id=<?= (int)$u['id'] ?>"><?= e(t('common_delete')) ?></a>
                 <?php endif; ?>
             </td>
         </tr>

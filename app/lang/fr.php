@@ -260,8 +260,12 @@ return [
     'mouvements_initial_stock' => 'Stock initial',
     'export_button' => '📊 Exporter Excel',
     'export_sheet_total' => 'Inventaire total',
-    'users_confirm_delete' => 'Supprimer cet utilisateur ? Cette action est définitive.',
     'users_error_cannot_delete_self' => 'Vous ne pouvez pas supprimer votre propre compte.',
     'users_error_has_activity' => 'Impossible de supprimer : ce compte a déjà de l\'activité enregistrée (mouvements, articles créés...). Désactivez-le plutôt.',
     'users_deleted' => 'Utilisateur « :username » supprimé.',
+    'users_confirm_delete_title' => 'Confirmer la suppression',
+    'users_confirm_delete_warning' => 'Vous êtes sur le point de supprimer définitivement l\'utilisateur « :username ». Cette action est irréversible.',
+    'users_delete_confirm_word' => 'OUI',
+    'users_delete_confirm_label' => 'Tapez « :word » pour confirmer',
+    'users_error_confirm_word_mismatch' => 'Le mot tapé ne correspond pas, la suppression n\'a pas été effectuée.',
 ];

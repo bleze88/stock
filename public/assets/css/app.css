@@ -167,6 +167,8 @@ a:hover { color: var(--color-primary); }
 .btn-danger { color: var(--color-danger); }
 .btn-secondary.btn-danger { border-color: var(--color-danger); color: var(--color-danger); }
 .btn-secondary.btn-danger:hover { background: var(--color-danger-soft); border-color: var(--color-danger); color: var(--color-danger); }
+.btn-danger-solid { background: var(--color-danger); color: #fff; }
+.btn-danger-solid:hover { background: #8f1e18; color: #fff; }
 .btn-block { display: flex; width: 100%; }
 
 form {

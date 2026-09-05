@@ -94,12 +94,7 @@ if ($route === 'users/edit') {
 }
 
 if ($route === 'users/delete') {
-    if (!isPost()) {
-        redirect('users');
-    }
-    csrfVerify();
-
-    $id = postInt('id');
+    $id = isPost() ? postInt('id') : getInt('id');
     $stmt = $db->prepare('SELECT * FROM users WHERE id = ?');
     $stmt->execute([$id]);
     $targetUser = $stmt->fetch();
@@ -112,6 +107,23 @@ if ($route === 'users/delete') {
     if ((int)$targetUser['id'] === (int)$currentAdmin['id']) {
         flashSet('error', t('users_error_cannot_delete_self'));
         redirect('users');
+    }
+
+    if (!isPost()) {
+        render('users/confirm_delete', ['targetUser' => $targetUser, 'error' => null]);
+        exit;
+    }
+
+    csrfVerify();
+
+    $typed = mb_strtoupper(trim(postString('confirm_word')));
+
+    if ($typed !== mb_strtoupper(t('users_delete_confirm_word'))) {
+        render('users/confirm_delete', [
+            'targetUser' => $targetUser,
+            'error' => t('users_error_confirm_word_mismatch'),
+        ]);
+        exit;
     }
 
     try {

@@ -246,8 +246,12 @@ return [
     'mouvements_initial_stock' => 'Scorta iniziale',
     'export_button' => '📊 Esporta in Excel',
     'export_sheet_total' => 'Inventario totale',
-    'users_confirm_delete' => 'Eliminare questo utente? Questa azione è definitiva.',
     'users_error_cannot_delete_self' => 'Non puoi eliminare il tuo stesso account.',
     'users_error_has_activity' => 'Impossibile eliminare: questo account ha già attività registrata (movimenti, elementi creati...). Disattivalo invece.',
     'users_deleted' => 'Utente «:username» eliminato.',
+    'users_confirm_delete_title' => 'Conferma eliminazione',
+    'users_confirm_delete_warning' => 'Stai per eliminare definitivamente l\'utente «:username». Questa azione è irreversibile.',
+    'users_delete_confirm_word' => 'SI',
+    'users_delete_confirm_label' => 'Digita «:word» per confermare',
+    'users_error_confirm_word_mismatch' => 'La parola digitata non corrisponde, l\'eliminazione non è stata effettuata.',
 ];

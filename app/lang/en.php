@@ -246,8 +246,12 @@ return [
     'mouvements_initial_stock' => 'Initial stock',
     'export_button' => '📊 Export to Excel',
     'export_sheet_total' => 'Total inventory',
-    'users_confirm_delete' => 'Delete this user? This action is permanent.',
     'users_error_cannot_delete_self' => 'You cannot delete your own account.',
     'users_error_has_activity' => 'Cannot delete: this account already has recorded activity (movements, created items...). Deactivate it instead.',
     'users_deleted' => 'User ":username" deleted.',
+    'users_confirm_delete_title' => 'Confirm deletion',
+    'users_confirm_delete_warning' => 'You are about to permanently delete the user ":username". This action cannot be undone.',
+    'users_delete_confirm_word' => 'YES',
+    'users_delete_confirm_label' => 'Type ":word" to confirm',
+    'users_error_confirm_word_mismatch' => 'The typed word did not match, the deletion was not performed.',
 ];

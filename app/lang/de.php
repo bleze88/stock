@@ -246,8 +246,12 @@ return [
     'mouvements_initial_stock' => 'Anfangsbestand',
     'export_button' => '📊 Nach Excel exportieren',
     'export_sheet_total' => 'Gesamtbestand',
-    'users_confirm_delete' => 'Diesen Benutzer löschen? Diese Aktion ist endgültig.',
     'users_error_cannot_delete_self' => 'Sie können Ihr eigenes Konto nicht löschen.',
     'users_error_has_activity' => 'Löschen nicht möglich: Für dieses Konto liegt bereits Aktivität vor (Bewegungen, erstellte Elemente...). Deaktivieren Sie es stattdessen.',
     'users_deleted' => 'Benutzer „:username" gelöscht.',
+    'users_confirm_delete_title' => 'Löschung bestätigen',
+    'users_confirm_delete_warning' => 'Sie sind dabei, den Benutzer „:username" endgültig zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.',
+    'users_delete_confirm_word' => 'JA',
+    'users_delete_confirm_label' => 'Geben Sie „:word" ein, um zu bestätigen',
+    'users_error_confirm_word_mismatch' => 'Das eingegebene Wort stimmt nicht überein, die Löschung wurde nicht durchgeführt.',
 ];
