@@ -22,6 +22,7 @@ return [
     'th_qty_after' => 'Menge danach',
     'th_total_qty' => 'Gesamtmenge',
     'th_threshold' => 'Schwelle',
+    'th_location' => 'Standort',
     'th_movement' => 'Bewegung',
     'th_by' => 'Von',
     'th_reason' => 'Grund',
@@ -105,6 +106,9 @@ return [
     'variantes_qty_hint_new' => 'Weitere Mengenänderungen werden anschliessend über Lagerbewegungen verwaltet.',
     'variantes_qty_hint_current' => 'Aktuelle Menge: <strong>:qty</strong> (nur über eine Lagerbewegung änderbar).',
     'variantes_threshold_label' => 'Spezifische Warnschwelle (optional, sonst wird die der Gruppe verwendet)',
+    'variantes_location_label' => 'Standort',
+    'variantes_location_placeholder' => 'z. B. Lager 1',
+    'variantes_location_hint' => 'Wo sich dieser Bestand physisch befindet (für alle Benutzer sichtbar).',
     'variantes_active_label' => 'Variante aktiv',
 
     'mouvements_form_title' => 'Lagerbewegung',

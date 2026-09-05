@@ -27,7 +27,7 @@ if ($route === 'export/inventory') {
 
     // Un onglet par type : détail Groupe / Variante / Quantité / Seuil.
     $rows = $db->query(
-        "SELECT t.nom AS type_nom, g.nom AS groupe_nom, v.libelle,
+        "SELECT t.nom AS type_nom, g.nom AS groupe_nom, v.libelle, v.location,
                 v.quantite, COALESCE(v.seuil_alerte, g.seuil_alerte) AS seuil
          FROM variantes v
          JOIN groupes g ON v.groupe_id = g.id
@@ -41,9 +41,9 @@ if ($route === 'export/inventory') {
         $byType[$r['type_nom']][] = $r;
     }
     foreach ($byType as $typeName => $typeRows) {
-        $sheetRows = [[t('th_group'), t('th_variant'), t('th_qty'), t('th_threshold')]];
+        $sheetRows = [[t('th_group'), t('th_variant'), t('th_location'), t('th_qty'), t('th_threshold')]];
         foreach ($typeRows as $r) {
-            $sheetRows[] = [$r['groupe_nom'], $r['libelle'], (int)$r['quantite'], (int)$r['seuil']];
+            $sheetRows[] = [$r['groupe_nom'], $r['libelle'], $r['location'] ?: '', (int)$r['quantite'], (int)$r['seuil']];
         }
         $writer->addSheet($typeName, $sheetRows);
     }

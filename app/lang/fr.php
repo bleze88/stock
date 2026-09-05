@@ -24,6 +24,7 @@ return [
     'th_qty_after' => 'Quantité après',
     'th_total_qty' => 'Quantité totale',
     'th_threshold' => 'Seuil',
+    'th_location' => 'Emplacement',
     'th_movement' => 'Mouvement',
     'th_by' => 'Par',
     'th_reason' => 'Motif',
@@ -114,6 +115,9 @@ return [
     'variantes_qty_hint_new' => 'Les quantités suivantes se gèrent ensuite via les mouvements de stock.',
     'variantes_qty_hint_current' => 'Quantité actuelle : <strong>:qty</strong> (modifiable uniquement via un mouvement de stock).',
     'variantes_threshold_label' => "Seuil d'alerte spécifique (optionnel, sinon celui du groupe est utilisé)",
+    'variantes_location_label' => 'Emplacement',
+    'variantes_location_placeholder' => 'ex. Stock 1',
+    'variantes_location_hint' => 'Indique où se trouve physiquement ce stock (visible par tous les utilisateurs).',
     'variantes_active_label' => 'Variante active',
 
     // Mouvements

@@ -22,6 +22,10 @@
     <label for="seuil_alerte"><?= e(t('variantes_threshold_label')) ?></label>
     <input type="number" id="seuil_alerte" name="seuil_alerte" min="0" value="<?= e((string)($variante['seuil_alerte'] ?? '')) ?>">
 
+    <label for="location"><?= e(t('variantes_location_label')) ?></label>
+    <input type="text" id="location" name="location" maxlength="150" placeholder="<?= e(t('variantes_location_placeholder')) ?>" value="<?= e($variante['location'] ?? '') ?>">
+    <p class="field-hint"><?= e(t('variantes_location_hint')) ?></p>
+
     <?php if ($variante): ?>
     <label class="checkbox-label">
         <input type="checkbox" name="active" value="1" <?= $variante['active'] ? 'checked' : '' ?>>

@@ -22,6 +22,7 @@ return [
     'th_qty_after' => 'Quantità dopo',
     'th_total_qty' => 'Quantità totale',
     'th_threshold' => 'Soglia',
+    'th_location' => 'Posizione',
     'th_movement' => 'Movimento',
     'th_by' => 'Da',
     'th_reason' => 'Motivo',
@@ -105,6 +106,9 @@ return [
     'variantes_qty_hint_new' => 'Le quantità successive si gestiscono poi tramite i movimenti di magazzino.',
     'variantes_qty_hint_current' => 'Quantità attuale: <strong>:qty</strong> (modificabile solo tramite un movimento di magazzino).',
     'variantes_threshold_label' => 'Soglia di avviso specifica (opzionale, altrimenti si usa quella del gruppo)',
+    'variantes_location_label' => 'Posizione',
+    'variantes_location_placeholder' => 'es. Magazzino 1',
+    'variantes_location_hint' => 'Dove si trova fisicamente questo stock (visibile a tutti gli utenti).',
     'variantes_active_label' => 'Variante attiva',
 
     'mouvements_form_title' => 'Movimento di magazzino',

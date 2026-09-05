@@ -22,6 +22,7 @@ return [
     'th_qty_after' => 'Quantity after',
     'th_total_qty' => 'Total quantity',
     'th_threshold' => 'Threshold',
+    'th_location' => 'Location',
     'th_movement' => 'Movement',
     'th_by' => 'By',
     'th_reason' => 'Reason',
@@ -105,6 +106,9 @@ return [
     'variantes_qty_hint_new' => 'Further quantity changes are then managed via stock movements.',
     'variantes_qty_hint_current' => 'Current quantity: <strong>:qty</strong> (can only be changed via a stock movement).',
     'variantes_threshold_label' => "Specific alert threshold (optional, otherwise the group's is used)",
+    'variantes_location_label' => 'Location',
+    'variantes_location_placeholder' => 'e.g. Storage 1',
+    'variantes_location_hint' => 'Where this stock is physically located (visible to all users).',
     'variantes_active_label' => 'Variant active',
 
     'mouvements_form_title' => 'Stock movement',

@@ -58,11 +58,12 @@
 <div class="table-responsive">
 <div class="table-scroll">
 <table class="table">
-    <thead><tr><th><?= e(t('th_label')) ?></th><th><?= e(t('th_qty')) ?></th><th><?= e(t('th_threshold')) ?></th><th><?= e(t('th_actions')) ?></th></tr></thead>
+    <thead><tr><th><?= e(t('th_label')) ?></th><th><?= e(t('th_location')) ?></th><th><?= e(t('th_qty')) ?></th><th><?= e(t('th_threshold')) ?></th><th><?= e(t('th_actions')) ?></th></tr></thead>
     <tbody>
     <?php foreach ($variantes as $v): ?>
         <tr class="<?= $v['quantite'] <= ($v['seuil_alerte'] ?? $groupe['seuil_alerte']) ? 'table-row--warning' : '' ?>">
             <td><?= e($v['libelle']) ?></td>
+            <td><?= e($v['location'] ?: '—') ?></td>
             <td><?= (int)$v['quantite'] ?></td>
             <td><?= (int)($v['seuil_alerte'] ?? $groupe['seuil_alerte']) ?></td>
             <td class="table-actions">
@@ -79,7 +80,7 @@
         </tr>
     <?php endforeach; ?>
     <?php if (!$variantes): ?>
-        <tr><td colspan="4"><?= e(t('groupes_no_variants')) ?></td></tr>
+        <tr><td colspan="5"><?= e(t('groupes_no_variants')) ?></td></tr>
     <?php endif; ?>
     </tbody>
 </table>

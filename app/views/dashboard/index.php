@@ -40,19 +40,20 @@
 <div class="table-responsive">
 <div class="table-scroll">
 <table class="table">
-    <thead><tr><th><?= e(t('th_type')) ?></th><th><?= e(t('th_group')) ?></th><th><?= e(t('th_variant')) ?></th><th><?= e(t('th_qty')) ?></th><th><?= e(t('th_threshold')) ?></th></tr></thead>
+    <thead><tr><th><?= e(t('th_type')) ?></th><th><?= e(t('th_group')) ?></th><th><?= e(t('th_variant')) ?></th><th><?= e(t('th_location')) ?></th><th><?= e(t('th_qty')) ?></th><th><?= e(t('th_threshold')) ?></th></tr></thead>
     <tbody>
     <?php foreach ($lowStock as $ls): ?>
         <tr class="table-row--warning">
             <td><?= e($ls['type_nom']) ?></td>
             <td><a href="/index.php?r=groupes/show&id=<?= (int)$ls['groupe_id'] ?>"><?= e($ls['groupe_nom']) ?></a></td>
             <td><?= e($ls['libelle']) ?></td>
+            <td><?= e($ls['location'] ?: '—') ?></td>
             <td><?= (int)$ls['quantite'] ?></td>
             <td><?= (int)($ls['variante_seuil'] ?? $ls['groupe_seuil']) ?></td>
         </tr>
     <?php endforeach; ?>
     <?php if (!$lowStock): ?>
-        <tr><td colspan="5"><?= e(t('dashboard_no_alerts')) ?></td></tr>
+        <tr><td colspan="6"><?= e(t('dashboard_no_alerts')) ?></td></tr>
     <?php endif; ?>
     </tbody>
 </table>

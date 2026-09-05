@@ -14,7 +14,7 @@ $totalsByType = $db->query(
 )->fetchAll();
 
 $lowStock = $db->query(
-    "SELECT v.id, v.libelle, v.quantite, v.seuil_alerte AS variante_seuil,
+    "SELECT v.id, v.libelle, v.quantite, v.seuil_alerte AS variante_seuil, v.location,
             g.id AS groupe_id, g.nom AS groupe_nom, g.seuil_alerte AS groupe_seuil,
             t.nom AS type_nom
      FROM variantes v
