@@ -21,8 +21,10 @@ $navSiteName = getSetting('site_name', DEFAULT_SITE_NAME);
     <nav class="site-nav" data-nav>
         <a href="/index.php?r=dashboard"><?= e(t('nav_dashboard')) ?></a>
         <a href="/index.php?r=types"><?= e(t('nav_inventory')) ?></a>
-        <a href="/index.php?r=mouvements/history"><?= e(t('nav_history')) ?></a>
         <?php if (canManageStock()): ?>
+        <a href="/index.php?r=mouvements/history"><?= e(t('nav_history')) ?></a>
+        <?php endif; ?>
+        <?php if ($navUser['role'] === ROLE_ADMIN): ?>
         <a href="/index.php?r=audit"><?= e(t('nav_audit')) ?></a>
         <?php endif; ?>
         <?php if ($navUser['role'] === ROLE_ADMIN): ?>

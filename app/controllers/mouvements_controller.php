@@ -60,6 +60,7 @@ if ($route === 'mouvements/create') {
 }
 
 if ($route === 'mouvements/history') {
+    requireAnyRole([ROLE_ADMIN, ROLE_MANAGER]);
     $groupeId = getInt('groupe_id') ?: null;
     $varianteId = getInt('variante_id') ?: null;
 

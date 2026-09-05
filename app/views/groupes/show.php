@@ -86,6 +86,7 @@
 </div>
 </div>
 
+<?php if ($canManage): ?>
 <div class="page-header">
     <h2><?= e(t('groupes_recent_movements')) ?></h2>
     <a class="btn btn-link" href="/index.php?r=mouvements/history&groupe_id=<?= (int)$groupe['id'] ?>"><?= e(t('groupes_view_all_history')) ?></a>
@@ -113,3 +114,4 @@
 </table>
 </div>
 </div>
+<?php endif; ?>

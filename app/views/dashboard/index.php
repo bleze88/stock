@@ -59,6 +59,7 @@
 </div>
 </div>
 
+<?php if ($canSeeHistory): ?>
 <h2><?= e(t('dashboard_recent_movements')) ?></h2>
 <div class="table-responsive">
 <div class="table-scroll">
@@ -84,3 +85,4 @@
 </table>
 </div>
 </div>
+<?php endif; ?>

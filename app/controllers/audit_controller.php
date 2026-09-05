@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-requireAnyRole([ROLE_ADMIN, ROLE_MANAGER]);
+requireRole(ROLE_ADMIN);
 $db = getDb();
 
 $entries = $db->query(

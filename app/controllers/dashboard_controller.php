@@ -26,7 +26,8 @@ $lowStock = $db->query(
      LIMIT 25"
 )->fetchAll();
 
-$recentMouvements = $db->query(
+$canSeeHistory = canManageStock();
+$recentMouvements = $canSeeHistory ? $db->query(
     "SELECT m.id, m.delta, m.quantite_apres, m.motif, m.created_at,
             v.libelle AS variante_libelle, g.nom AS groupe_nom, u.full_name AS user_full_name
      FROM mouvements m
@@ -35,7 +36,7 @@ $recentMouvements = $db->query(
      JOIN users u ON m.user_id = u.id
      ORDER BY m.created_at DESC, m.id DESC
      LIMIT 15"
-)->fetchAll();
+)->fetchAll() : [];
 
 $totalArticles = (int)$db->query('SELECT COALESCE(SUM(quantite), 0) AS n FROM variantes WHERE active = 1')->fetch()['n'];
 $totalGroupes = (int)$db->query('SELECT COUNT(*) AS n FROM groupes WHERE active = 1')->fetch()['n'];
@@ -44,6 +45,7 @@ render('dashboard/index', [
     'totalsByType' => $totalsByType,
     'lowStock' => $lowStock,
     'recentMouvements' => $recentMouvements,
+    'canSeeHistory' => $canSeeHistory,
     'totalArticles' => $totalArticles,
     'totalGroupes' => $totalGroupes,
 ]);
