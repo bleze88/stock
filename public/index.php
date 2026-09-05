@@ -67,6 +67,10 @@ switch ($route) {
     case 'export/inventory':
         require APP_PATH . '/controllers/export_controller.php';
         break;
+    case 'stock/export':
+    case 'stock/import':
+        require APP_PATH . '/controllers/stock_transfer_controller.php';
+        break;
     default:
         http_response_code(404);
         render('errors/404', []);

@@ -7,6 +7,11 @@ define('STORAGE_PATH', ROOT_PATH . '/storage');
 define('DB_PATH', STORAGE_PATH . '/database/stock.sqlite');
 define('UPLOADS_PATH', STORAGE_PATH . '/uploads');
 define('PUBLIC_MEDIA_PATH', ROOT_PATH . '/public/media');
+define('BACKUPS_PATH', STORAGE_PATH . '/backups');
+
+// Taille max d'une archive d'export/import du stock (données + images) : bien
+// au-dessus d'un usage normal, juste un garde-fou anti "bombe de décompression".
+define('STOCK_TRANSFER_MAX_BYTES', 200 * 1024 * 1024);
 
 define('SESSION_COOKIE_NAME', 'asso_sess');
 define('SESSION_IDLE_TIMEOUT_SECONDS', 30 * 60);

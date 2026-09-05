@@ -75,3 +75,12 @@
         <button type="submit" class="btn btn-link"><?= e(t('settings_color_reset')) ?></button>
     </form>
 </div>
+
+<div class="card">
+    <h2><?= e(t('settings_transfer_title')) ?></h2>
+    <p class="field-hint"><?= e(t('settings_transfer_hint')) ?></p>
+    <div class="card__actions">
+        <a class="btn btn-secondary" href="/index.php?r=stock/export"><?= e(t('settings_transfer_export_btn')) ?></a>
+        <a class="btn btn-secondary btn-danger" href="/index.php?r=stock/import"><?= e(t('settings_transfer_import_btn')) ?></a>
+    </div>
+</div>
