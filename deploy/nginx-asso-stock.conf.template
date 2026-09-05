@@ -33,7 +33,7 @@ server {
     # Pas de reecriture vers index.php pour les chemins inexistants : toute
     # l'appli passe par /index.php?r=... explicitement, donc un chemin bidon
     # (sondes de bots, etc.) doit recevoir un 404 direct sans jamais invoquer PHP.
-    location = / { try_files /index.php =404; }
+    location = / { rewrite ^ /index.php last; }
     location / {
         try_files $uri =404;
     }
