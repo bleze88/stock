@@ -1,0 +1,14 @@
+# Données runtime (base de données, images) — jamais versionnées
+storage/database/*.sqlite*
+storage/uploads/
+storage/logs/
+public/media/
+
+# Artefacts système
+.DS_Store
+*.swp
+
+# Sauvegardes locales éventuelles
+*.bak
+PENTEST_REPORT.md
+SECURITY_REVIEW.md

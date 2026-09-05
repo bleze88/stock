@@ -1,0 +1,65 @@
+# Config Nginx pour votre-domaine.example
+# Point de depart HTTP uniquement : `certbot --nginx --redirect` ajoute ensuite
+# automatiquement le bloc HTTPS (ssl_certificate) et la redirection 80->443.
+# PHP_FPM_SOCK est remplace par le script de deploiement (ex: php8.4-fpm.sock)
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name votre-domaine.example;
+
+    root /var/www/asso-stock/public;
+    index index.php;
+
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "geolocation=(), camera=(), microphone=()" always;
+
+    client_max_body_size 16m;
+
+    access_log /var/log/nginx/asso-stock.access.log;
+    error_log  /var/log/nginx/asso-stock.error.log;
+
+    # Fichiers auto-demandes par les navigateurs : 404 direct, jamais via PHP
+    # (evite d'ouvrir une session inutilement a chaque navigation).
+    location = /favicon.ico { access_log off; log_not_found off; try_files $uri =404; }
+    location ~ ^/(apple-touch-icon.*\.png|android-chrome.*\.png|site\.webmanifest|robots\.txt)$ { access_log off; log_not_found off; try_files $uri =404; }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt;
+    }
+
+    # Pas de reecriture vers index.php pour les chemins inexistants : toute
+    # l'appli passe par /index.php?r=... explicitement, donc un chemin bidon
+    # (sondes de bots, etc.) doit recevoir un 404 direct sans jamais invoquer PHP.
+    location = / { try_files /index.php =404; }
+    location / {
+        try_files $uri =404;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/run/php/PHP_FPM_SOCK;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_hide_header X-Powered-By;
+        # Evite la duplication avec les add_header ci-dessus (PHP renvoie les memes).
+        fastcgi_hide_header X-Content-Type-Options;
+        fastcgi_hide_header X-Frame-Options;
+        fastcgi_hide_header Referrer-Policy;
+        fastcgi_hide_header Permissions-Policy;
+        fastcgi_hide_header Strict-Transport-Security;
+    }
+
+    # Vignettes generees uniquement : jamais d'execution PHP sous /media/
+    location ^~ /media/ {
+        location ~ \.php$ { deny all; }
+    }
+
+    # Bloque tout dotfile (.env, .git, etc.) meme si un jour present sous public/
+    location ~ /\.(?!well-known) {
+        deny all;
+    }
+
+    # storage/ et app/ sont hors du webroot (root est public/), donc deja inaccessibles.
+}

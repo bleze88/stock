@@ -1,0 +1,75 @@
+# Stock
+
+Système de gestion de stock : inventaire hiérarchique (Type → Groupe → Variante), suivi des mouvements de stock, gestion des utilisateurs par rôle, interface multilingue (FR/EN/DE/IT), personnalisable (logo, couleur, nom).
+
+Logiciel libre et gratuit, sans aucune licence d'utilisation restrictive : voir [LICENSE](LICENSE). Prenez-le, modifiez-le, utilisez-le comme vous voulez.
+
+## Stack technique
+
+- **PHP natif** (sans framework) — PDO, sessions, `password_hash`/`password_verify`
+- **SQLite** comme base de données (fichier unique, facile à sauvegarder/déplacer)
+- **Nginx + PHP-FPM** pour le serveur web
+- **Let's Encrypt** pour le HTTPS
+
+Choix assumé : pas de Docker, pas de framework lourd — la stack la plus simple et la plus portable possible (fonctionne sur n'importe quel hébergement PHP/SQLite standard, mutualisé ou VPS).
+
+## Fonctionnalités
+
+- **Authentification sécurisée** : verrouillage après échecs répétés, sessions durcies, CSRF sur toutes les actions
+- **Inventaire** : Types → Groupes → Variantes, avec quantités et seuils d'alerte de stock bas
+- **Mouvements de stock** : entrées/sorties tracées avec historique complet
+- **Images produits** : upload avec redimensionnement et compression automatiques (les photos de téléphone, même très grandes, sont acceptées et optimisées)
+- **3 rôles** : Admin (tout), Gestionnaire de stock (créer/modifier/supprimer le stock), Lecteur (consultation seule)
+- **Journal d'activité** : trace toute création/suppression d'article
+- **Multilingue** : français, anglais, allemand, italien — au choix par utilisateur
+- **Personnalisation** : nom du site, logo, couleur principale (menu Paramètres, admin)
+- **Responsive** : utilisable sur mobile/tablette
+
+## Structure du projet
+
+```
+app/
+├── bootstrap.php       # session, headers de sécurité, point d'entrée commun
+├── config.php          # constantes de configuration
+├── lib/                # auth, CSRF, i18n, uploads, audit, paramètres...
+├── controllers/        # un fichier par domaine (types, groupes, mouvements...)
+├── views/              # templates PHP (layout + pages)
+├── lang/               # traductions fr/en/de/it
+└── migrations/         # schéma SQL, appliqué via migrate.php
+
+public/                 # webroot Nginx (seul dossier exposé)
+├── index.php           # front controller / routeur
+└── assets/             # CSS/JS
+
+storage/                # hors webroot — base SQLite + images uploadées (non versionné)
+bin/console.php         # création d'utilisateurs en CLI
+scripts/                # sauvegarde, test de fumée
+deploy/                 # scripts de provisionnement serveur (Nginx, PHP-FPM, durcissement)
+```
+
+## Documentation
+
+- [RUNBOOK.md](RUNBOOK.md) — accès, déploiement, sauvegardes, migration vers un autre hébergeur
+
+## Déploiement
+
+Voir [RUNBOOK.md](RUNBOOK.md) pour la procédure complète. En résumé :
+
+```bash
+rsync -az app public bin scripts <utilisateur>@<serveur>:/var/www/asso-stock/
+ssh <utilisateur>@<serveur> 'sudo -u www-data php /var/www/asso-stock/app/migrations/migrate.php'
+```
+
+## Développement local
+
+Nécessite PHP 8.2+ avec les extensions `pdo_sqlite`, `gd`, `fileinfo`, `mbstring`.
+
+```bash
+php app/migrations/migrate.php
+php bin/console.php create-user admin admin "Administrateur"
+php -S localhost:8000 -t public
+```
+
+## Licence
+
+Domaine public / Unlicense — voir [LICENSE](LICENSE). Aucune restriction d'utilisation, de modification ou de redistribution.
