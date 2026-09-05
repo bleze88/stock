@@ -23,6 +23,7 @@ Choix assumé : pas de Docker, pas de framework lourd — la stack la plus simpl
 - **Journal d'activité** : trace toute création/suppression d'article
 - **Multilingue** : français, anglais, allemand, italien — au choix par utilisateur
 - **Personnalisation** : nom du site, logo, couleur principale (menu Paramètres, admin)
+- **Export/import du stock** : sauvegarde et migration de l'inventaire (types/groupes/variantes/images) vers un autre serveur en un fichier, sans accès SSH
 - **Responsive** : utilisable sur mobile/tablette
 
 ## Structure du projet

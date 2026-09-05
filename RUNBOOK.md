@@ -66,8 +66,16 @@ sudo -u www-data php /var/www/asso-stock/bin/console.php reset-password <identif
 - Restauration : copier le fichier `.sqlite` souhaité vers `/var/www/asso-stock/storage/database/stock.sqlite` (service arrêté ou site en maintenance le temps de la copie), puis `sudo chown www-data:www-data` + `sudo chmod 640` dessus.
 - Recommandé : copier périodiquement `/var/backups/asso-stock/` hors du serveur pour survivre à une panne totale.
 
-## Migration vers un autre hébergeur
+## Migration vers un autre hébergeur / changement de VPS
 
+Méthode recommandée, sans accès SSH nécessaire à l'ancien serveur pour la partie stock :
+
+1. Sur l'ancien site, en tant qu'admin : menu **Paramètres → Export / import du stock → Exporter le stock**. Télécharge un fichier `.zip` contenant les types, groupes, variantes et images (pas les comptes utilisateurs, ni l'historique, ni les paramètres du site — propres à chaque instance).
+2. Sur le nouveau serveur, lancer `sudo ./install.sh` (voir plus haut) pour obtenir une installation neuve et fonctionnelle avec son propre compte admin.
+3. Sur le nouveau site, en tant qu'admin : **Paramètres → Importer un stock**, sélectionner le fichier téléchargé à l'étape 1, taper `OUI` pour confirmer. Une sauvegarde de sécurité de l'état (vide) du nouveau site est créée automatiquement avant l'import, dans `storage/backups/` sur le nouveau serveur.
+4. Recréer les comptes utilisateurs nécessaires (menu Utilisateurs) et reconfigurer la personnalisation du site (nom, logo, couleur) si besoin.
+
+Alternative (accès SSH aux deux serveurs, migration complète base par base, y compris comptes/historique) :
 1. Copier `app/`, `public/`, `bin/`, `scripts/`, le fichier `storage/database/stock.sqlite` et le dossier `storage/uploads/` vers le nouveau serveur.
 2. Installer Nginx + PHP-FPM (extensions : sqlite3, gd, fileinfo, mbstring, zip) sur le nouveau serveur.
 3. Reprendre la config Nginx dans `deploy/nginx-asso-stock.conf.template` et relancer `certbot --nginx`.
