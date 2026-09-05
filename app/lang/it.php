@@ -246,4 +246,8 @@ return [
     'mouvements_initial_stock' => 'Scorta iniziale',
     'export_button' => '📊 Esporta in Excel',
     'export_sheet_total' => 'Inventario totale',
+    'users_confirm_delete' => 'Eliminare questo utente? Questa azione è definitiva.',
+    'users_error_cannot_delete_self' => 'Non puoi eliminare il tuo stesso account.',
+    'users_error_has_activity' => 'Impossibile eliminare: questo account ha già attività registrata (movimenti, elementi creati...). Disattivalo invece.',
+    'users_deleted' => 'Utente «:username» eliminato.',
 ];

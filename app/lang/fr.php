@@ -260,4 +260,8 @@ return [
     'mouvements_initial_stock' => 'Stock initial',
     'export_button' => '📊 Exporter Excel',
     'export_sheet_total' => 'Inventaire total',
+    'users_confirm_delete' => 'Supprimer cet utilisateur ? Cette action est définitive.',
+    'users_error_cannot_delete_self' => 'Vous ne pouvez pas supprimer votre propre compte.',
+    'users_error_has_activity' => 'Impossible de supprimer : ce compte a déjà de l\'activité enregistrée (mouvements, articles créés...). Désactivez-le plutôt.',
+    'users_deleted' => 'Utilisateur « :username » supprimé.',
 ];

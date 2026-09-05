@@ -246,4 +246,8 @@ return [
     'mouvements_initial_stock' => 'Anfangsbestand',
     'export_button' => '📊 Nach Excel exportieren',
     'export_sheet_total' => 'Gesamtbestand',
+    'users_confirm_delete' => 'Diesen Benutzer löschen? Diese Aktion ist endgültig.',
+    'users_error_cannot_delete_self' => 'Sie können Ihr eigenes Konto nicht löschen.',
+    'users_error_has_activity' => 'Löschen nicht möglich: Für dieses Konto liegt bereits Aktivität vor (Bewegungen, erstellte Elemente...). Deaktivieren Sie es stattdessen.',
+    'users_deleted' => 'Benutzer „:username" gelöscht.',
 ];

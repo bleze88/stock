@@ -49,6 +49,7 @@ switch ($route) {
     case 'users':
     case 'users/create':
     case 'users/edit':
+    case 'users/delete':
         require APP_PATH . '/controllers/users_controller.php';
         break;
     case 'settings':

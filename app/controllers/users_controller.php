@@ -6,7 +6,7 @@ $db = getDb();
 
 if ($route === 'users') {
     $users = $db->query('SELECT id, username, role, full_name, active, last_login_at FROM users ORDER BY username')->fetchAll();
-    render('users/index', ['users' => $users]);
+    render('users/index', ['users' => $users, 'currentAdminId' => (int)$currentAdmin['id']]);
     exit;
 }
 
@@ -91,4 +91,36 @@ if ($route === 'users/edit') {
 
     render('users/form', ['error' => $error, 'targetUser' => $targetUser]);
     exit;
+}
+
+if ($route === 'users/delete') {
+    if (!isPost()) {
+        redirect('users');
+    }
+    csrfVerify();
+
+    $id = postInt('id');
+    $stmt = $db->prepare('SELECT * FROM users WHERE id = ?');
+    $stmt->execute([$id]);
+    $targetUser = $stmt->fetch();
+    if (!$targetUser) {
+        http_response_code(404);
+        render('errors/404', []);
+        exit;
+    }
+
+    if ((int)$targetUser['id'] === (int)$currentAdmin['id']) {
+        flashSet('error', t('users_error_cannot_delete_self'));
+        redirect('users');
+    }
+
+    try {
+        $del = $db->prepare('DELETE FROM users WHERE id = ?');
+        $del->execute([$id]);
+        flashSet('success', t('users_deleted', ['username' => $targetUser['username']]));
+    } catch (PDOException $e) {
+        flashSet('error', t('users_error_has_activity'));
+    }
+
+    redirect('users');
 }
