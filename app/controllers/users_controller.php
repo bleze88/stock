@@ -5,7 +5,7 @@ $currentAdmin = requireRole(ROLE_ADMIN);
 $db = getDb();
 
 if ($route === 'users') {
-    $users = $db->query('SELECT id, username, role, full_name, active, last_login_at FROM users ORDER BY username')->fetchAll();
+    $users = $db->query('SELECT id, username, role, full_name, active, locked, last_login_at FROM users ORDER BY username')->fetchAll();
     render('users/index', ['users' => $users, 'currentAdminId' => (int)$currentAdmin['id']]);
     exit;
 }
@@ -35,6 +35,7 @@ if ($route === 'users/create') {
                     'INSERT INTO users (username, password_hash, role, full_name) VALUES (?, ?, ?, ?)'
                 );
                 $stmt->execute([$username, $hash, $role, $fullName]);
+                logAudit('create', 'user', (int)$db->lastInsertId(), $username);
                 flashSet('success', t('users_created', ['username' => $username]));
                 redirect('users');
             } catch (PDOException $e) {
@@ -129,10 +130,36 @@ if ($route === 'users/delete') {
     try {
         $del = $db->prepare('DELETE FROM users WHERE id = ?');
         $del->execute([$id]);
+        logAudit('delete', 'user', $id, $targetUser['username']);
         flashSet('success', t('users_deleted', ['username' => $targetUser['username']]));
     } catch (PDOException $e) {
         flashSet('error', t('users_error_has_activity'));
     }
 
+    redirect('users');
+}
+
+if ($route === 'users/unlock') {
+    if (!isPost()) {
+        redirect('users');
+    }
+    csrfVerify();
+
+    $id = postInt('id');
+    $stmt = $db->prepare('SELECT username FROM users WHERE id = ?');
+    $stmt->execute([$id]);
+    $targetUser = $stmt->fetch();
+
+    $upd = $db->prepare('UPDATE users SET locked = 0, failed_attempts = 0 WHERE id = ?');
+    $upd->execute([$id]);
+
+    if ($targetUser) {
+        // Efface aussi le compteur de limitation temporaire (IP/nom d'utilisateur),
+        // sinon il continue de bloquer la connexion malgré le déblocage.
+        $clear = $db->prepare('DELETE FROM login_attempts WHERE username = ?');
+        $clear->execute([$targetUser['username']]);
+    }
+
+    flashSet('success', t('users_unlocked'));
     redirect('users');
 }

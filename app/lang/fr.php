@@ -268,4 +268,9 @@ return [
     'users_delete_confirm_word' => 'OUI',
     'users_delete_confirm_label' => 'Tapez « :word » pour confirmer',
     'users_error_confirm_word_mismatch' => 'Le mot tapé ne correspond pas, la suppression n\'a pas été effectuée.',
+    'login_error_account_locked' => 'Ce compte est verrouillé après trop de tentatives échouées. Seul un administrateur peut le débloquer.',
+    'users_locked_label' => 'Verrouillé',
+    'users_unlock_button' => 'Débloquer',
+    'users_unlocked' => 'Compte débloqué.',
+    'audit_entity_type_user' => 'Utilisateur',
 ];

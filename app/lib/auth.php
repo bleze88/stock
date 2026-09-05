@@ -15,7 +15,7 @@ function currentUser(): ?array
         return null;
     }
 
-    $stmt = getDb()->prepare('SELECT id, username, role, full_name, active, locale FROM users WHERE id = ? AND active = 1');
+    $stmt = getDb()->prepare('SELECT id, username, role, full_name, active, locale FROM users WHERE id = ? AND active = 1 AND locked = 0');
     $stmt->execute([$_SESSION['user_id']]);
     $row = $stmt->fetch();
     $user = $row ?: null;
@@ -29,14 +29,30 @@ function currentUser(): ?array
     return $user;
 }
 
-function attemptLogin(string $username, string $password): bool
+/**
+ * Tente une connexion. Retourne 'ok', 'locked' (compte verrouillé après trop
+ * d'échecs, déblocable uniquement par un admin) ou 'invalid'.
+ */
+function attemptLogin(string $username, string $password): string
 {
-    $stmt = getDb()->prepare('SELECT id, username, password_hash, role, active FROM users WHERE username = ?');
+    $stmt = getDb()->prepare('SELECT id, username, password_hash, role, active, locked, failed_attempts FROM users WHERE username = ?');
     $stmt->execute([$username]);
     $row = $stmt->fetch();
 
-    if (!$row || (int)$row['active'] !== 1 || !password_verify($password, $row['password_hash'])) {
-        return false;
+    if (!$row || (int)$row['active'] !== 1) {
+        return 'invalid';
+    }
+
+    if ((int)$row['locked'] === 1) {
+        return 'locked';
+    }
+
+    if (!password_verify($password, $row['password_hash'])) {
+        $newFailedAttempts = (int)$row['failed_attempts'] + 1;
+        $shouldLock = $newFailedAttempts >= LOGIN_MAX_ATTEMPTS;
+        $upd = getDb()->prepare('UPDATE users SET failed_attempts = ?, locked = ? WHERE id = ?');
+        $upd->execute([$newFailedAttempts, $shouldLock ? 1 : 0, $row['id']]);
+        return $shouldLock ? 'locked' : 'invalid';
     }
 
     if (password_needs_rehash($row['password_hash'], PASSWORD_DEFAULT)) {
@@ -50,10 +66,10 @@ function attemptLogin(string $username, string $password): bool
     $_SESSION['last_activity'] = time();
     unset($_SESSION['csrf_token']); // nouveau token après élévation de privilège
 
-    $upd = getDb()->prepare('UPDATE users SET last_login_at = datetime(\'now\') WHERE id = ?');
+    $upd = getDb()->prepare('UPDATE users SET last_login_at = datetime(\'now\'), failed_attempts = 0 WHERE id = ?');
     $upd->execute([$row['id']]);
 
-    return true;
+    return 'ok';
 }
 
 function logoutUser(): void

@@ -254,4 +254,9 @@ return [
     'users_delete_confirm_word' => 'YES',
     'users_delete_confirm_label' => 'Type ":word" to confirm',
     'users_error_confirm_word_mismatch' => 'The typed word did not match, the deletion was not performed.',
+    'login_error_account_locked' => 'This account is locked after too many failed attempts. Only an administrator can unlock it.',
+    'users_locked_label' => 'Locked',
+    'users_unlock_button' => 'Unlock',
+    'users_unlocked' => 'Account unlocked.',
+    'audit_entity_type_user' => 'User',
 ];

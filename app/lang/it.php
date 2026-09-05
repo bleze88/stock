@@ -254,4 +254,9 @@ return [
     'users_delete_confirm_word' => 'SI',
     'users_delete_confirm_label' => 'Digita «:word» per confermare',
     'users_error_confirm_word_mismatch' => 'La parola digitata non corrisponde, l\'eliminazione non è stata effettuata.',
+    'login_error_account_locked' => 'Questo account è bloccato dopo troppi tentativi falliti. Solo un amministratore può sbloccarlo.',
+    'users_locked_label' => 'Bloccato',
+    'users_unlock_button' => 'Sblocca',
+    'users_unlocked' => 'Account sbloccato.',
+    'audit_entity_type_user' => 'Utente',
 ];

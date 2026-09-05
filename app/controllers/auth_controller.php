@@ -29,12 +29,18 @@ if (isPost()) {
     } elseif ($username === '' || $password === '') {
         $error = t('login_error_invalid');
         recordLoginAttempt($username, $ip, false);
-    } elseif (attemptLogin($username, $password)) {
-        recordLoginAttempt($username, $ip, true);
-        redirect('dashboard');
     } else {
-        recordLoginAttempt($username, $ip, false);
-        $error = t('login_error_invalid');
+        $result = attemptLogin($username, $password);
+        if ($result === 'ok') {
+            recordLoginAttempt($username, $ip, true);
+            redirect('dashboard');
+        } elseif ($result === 'locked') {
+            recordLoginAttempt($username, $ip, false);
+            $error = t('login_error_account_locked');
+        } else {
+            recordLoginAttempt($username, $ip, false);
+            $error = t('login_error_invalid');
+        }
     }
 }
 

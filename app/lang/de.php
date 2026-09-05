@@ -254,4 +254,9 @@ return [
     'users_delete_confirm_word' => 'JA',
     'users_delete_confirm_label' => 'Geben Sie „:word" ein, um zu bestätigen',
     'users_error_confirm_word_mismatch' => 'Das eingegebene Wort stimmt nicht überein, die Löschung wurde nicht durchgeführt.',
+    'login_error_account_locked' => 'Dieses Konto ist nach zu vielen fehlgeschlagenen Versuchen gesperrt. Nur ein Administrator kann es entsperren.',
+    'users_locked_label' => 'Gesperrt',
+    'users_unlock_button' => 'Entsperren',
+    'users_unlocked' => 'Konto entsperrt.',
+    'audit_entity_type_user' => 'Benutzer',
 ];
