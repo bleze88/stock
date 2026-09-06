@@ -23,6 +23,8 @@ return [
     'th_total_qty' => 'Quantità totale',
     'th_threshold' => 'Soglia',
     'th_location' => 'Posizione',
+    'th_price' => 'Prezzo unitario',
+    'th_value' => 'Valore',
     'th_movement' => 'Movimento',
     'th_by' => 'Da',
     'th_reason' => 'Motivo',
@@ -67,6 +69,7 @@ return [
     'dashboard_no_alerts' => 'Nessun avviso, tutto ok.',
     'dashboard_recent_movements' => 'Movimenti recenti',
     'dashboard_no_movements' => 'Nessun movimento registrato.',
+    'dashboard_stat_value' => 'Valore totale del magazzino',
 
     'types_page_title' => 'Inventario — Tipi',
     'types_new' => '+ Nuovo tipo',
@@ -98,6 +101,7 @@ return [
     'groupes_no_variants' => 'Nessuna variante per questo gruppo.',
     'groupes_recent_movements' => 'Movimenti recenti',
     'groupes_view_all_history' => 'Vedi tutta la cronologia',
+    'groupes_total_value_label' => 'Valore totale del magazzino di questo gruppo',
 
     'variantes_form_title_edit' => 'Modifica variante',
     'variantes_form_title_new' => 'Nuova variante',
@@ -109,6 +113,9 @@ return [
     'variantes_location_label' => 'Posizione',
     'variantes_location_placeholder' => 'es. Magazzino 1',
     'variantes_location_hint' => 'Dove si trova fisicamente questo stock (visibile a tutti gli utenti).',
+    'variantes_price_label' => 'Prezzo di vendita unitario (:currency)',
+    'variantes_price_placeholder' => 'es. 12.50',
+    'variantes_price_hint' => 'Prezzo di vendita di una unità di questa variante (opzionale, lasciare vuoto se non applicabile).',
     'variantes_active_label' => 'Variante attiva',
 
     'mouvements_form_title' => 'Movimento di magazzino',
@@ -151,6 +158,12 @@ return [
     'settings_color_hint' => "Scegli un colore predefinito o un colore libero per personalizzare l'aspetto del sito.",
     'settings_color_free_label' => 'Colore libero',
     'settings_color_reset' => 'Ripristina il colore predefinito',
+
+    'settings_currency_title' => 'Valuta',
+    'settings_currency_hint' => 'Valuta utilizzata per visualizzare i prezzi di vendita delle varianti.',
+    'settings_currency_label' => 'Valuta',
+    'settings_currency_updated' => 'Valuta aggiornata.',
+    'settings_error_currency_invalid' => 'Valuta non valida.',
 
     'settings_transfer_title' => 'Esporta / importa magazzino',
     'settings_transfer_hint' => 'Per cambiare server o provider di hosting: esporta il magazzino (tipi, gruppi, varianti, immagini) in un file, quindi importalo sulla nuova installazione. Gli account utente non sono interessati.',
@@ -203,6 +216,7 @@ return [
 
     'variantes_error_required' => 'L\'etichetta è obbligatoria e la quantità deve essere positiva.',
     'variantes_error_required_edit' => "L'etichetta è obbligatoria.",
+    'variantes_error_price_invalid' => 'Il prezzo di vendita deve essere un numero positivo.',
     'variantes_error_duplicate' => 'Questa variante esiste già per questo gruppo.',
     'variantes_created' => 'Variante «:libelle» creata.',
     'variantes_updated' => 'Variante aggiornata.',

@@ -23,6 +23,8 @@ return [
     'th_total_qty' => 'Gesamtmenge',
     'th_threshold' => 'Schwelle',
     'th_location' => 'Standort',
+    'th_price' => 'Einzelpreis',
+    'th_value' => 'Wert',
     'th_movement' => 'Bewegung',
     'th_by' => 'Von',
     'th_reason' => 'Grund',
@@ -67,6 +69,7 @@ return [
     'dashboard_no_alerts' => 'Keine Warnung, alles in Ordnung.',
     'dashboard_recent_movements' => 'Letzte Bewegungen',
     'dashboard_no_movements' => 'Keine Bewegung erfasst.',
+    'dashboard_stat_value' => 'Gesamtwert des Bestands',
 
     'types_page_title' => 'Inventar — Typen',
     'types_new' => '+ Neuer Typ',
@@ -98,6 +101,7 @@ return [
     'groupes_no_variants' => 'Keine Variante für diese Gruppe.',
     'groupes_recent_movements' => 'Letzte Bewegungen',
     'groupes_view_all_history' => 'Gesamten Verlauf anzeigen',
+    'groupes_total_value_label' => 'Gesamtwert des Bestands dieser Gruppe',
 
     'variantes_form_title_edit' => 'Variante bearbeiten',
     'variantes_form_title_new' => 'Neue Variante',
@@ -109,6 +113,9 @@ return [
     'variantes_location_label' => 'Standort',
     'variantes_location_placeholder' => 'z. B. Lager 1',
     'variantes_location_hint' => 'Wo sich dieser Bestand physisch befindet (für alle Benutzer sichtbar).',
+    'variantes_price_label' => 'Verkaufspreis pro Einheit (:currency)',
+    'variantes_price_placeholder' => 'z. B. 12.50',
+    'variantes_price_hint' => 'Verkaufspreis für eine Einheit dieser Variante (optional, leer lassen, falls nicht zutreffend).',
     'variantes_active_label' => 'Variante aktiv',
 
     'mouvements_form_title' => 'Lagerbewegung',
@@ -151,6 +158,12 @@ return [
     'settings_color_hint' => 'Wählen Sie eine vordefinierte Farbe oder eine freie Farbe, um das Erscheinungsbild der Website anzupassen.',
     'settings_color_free_label' => 'Freie Farbe',
     'settings_color_reset' => 'Auf Standardfarbe zurücksetzen',
+
+    'settings_currency_title' => 'Währung',
+    'settings_currency_hint' => 'Währung für die Anzeige der Verkaufspreise der Varianten.',
+    'settings_currency_label' => 'Währung',
+    'settings_currency_updated' => 'Währung aktualisiert.',
+    'settings_error_currency_invalid' => 'Ungültige Währung.',
 
     'settings_transfer_title' => 'Bestand exportieren / importieren',
     'settings_transfer_hint' => 'Für einen Wechsel des Servers oder Hosting-Anbieters: Bestand (Typen, Gruppen, Varianten, Bilder) in eine Datei exportieren und auf der neuen Installation importieren. Benutzerkonten sind davon nicht betroffen.',
@@ -203,6 +216,7 @@ return [
 
     'variantes_error_required' => 'Die Bezeichnung ist erforderlich und die Menge muss positiv sein.',
     'variantes_error_required_edit' => 'Die Bezeichnung ist erforderlich.',
+    'variantes_error_price_invalid' => 'Der Verkaufspreis muss eine positive Zahl sein.',
     'variantes_error_duplicate' => 'Diese Variante existiert bereits für diese Gruppe.',
     'variantes_created' => 'Variante „:libelle" erstellt.',
     'variantes_updated' => 'Variante aktualisiert.',

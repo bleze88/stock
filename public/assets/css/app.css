@@ -312,6 +312,8 @@ form textarea { min-height: 80px; }
 .table tbody tr:last-child td { border-bottom: none; }
 .table tbody tr:hover { background: var(--color-bg); }
 .table-row--warning, .table-row--warning:hover { background: var(--color-warning-bg); }
+.table-row--total, .table-row--total:hover { background: var(--color-bg); }
+.table-row--total td { border-top: 2px solid var(--color-border); }
 .table-actions { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
 .text-success { color: var(--color-primary-dark); font-weight: 600; }
 .text-danger { color: var(--color-danger); font-weight: 600; }

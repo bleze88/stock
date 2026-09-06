@@ -13,6 +13,12 @@
         <span class="stat-card__value"><?= count($lowStock) ?></span>
         <span class="stat-card__label"><?= e(t('dashboard_stat_alerts')) ?></span>
     </div>
+    <?php if ($totalStockValue > 0): ?>
+    <div class="stat-card">
+        <span class="stat-card__value"><?= e(formatPrice($totalStockValue)) ?></span>
+        <span class="stat-card__label"><?= e(t('dashboard_stat_value')) ?></span>
+    </div>
+    <?php endif; ?>
 </div>
 
 <h2><?= e(t('dashboard_stock_by_type')) ?></h2>

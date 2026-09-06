@@ -20,7 +20,7 @@ function buildStockExportZip(): string
         'SELECT id, type_id, nom, description, seuil_alerte, active, created_at FROM groupes ORDER BY id'
     )->fetchAll();
     $variantes = $db->query(
-        'SELECT id, groupe_id, libelle, sku, quantite, seuil_alerte, active, location, created_at FROM variantes ORDER BY id'
+        'SELECT id, groupe_id, libelle, sku, quantite, seuil_alerte, active, location, prix_vente, created_at FROM variantes ORDER BY id'
     )->fetchAll();
     $images = $db->query(
         'SELECT id, groupe_id, original_path, thumb_path, original_name, mime_type, size_bytes, sort_order, created_at FROM images ORDER BY id'
@@ -163,14 +163,14 @@ function importStockZip(string $zipPath): array
         }
 
         $insVariante = $db->prepare(
-            'INSERT INTO variantes (id, groupe_id, libelle, sku, quantite, seuil_alerte, active, location, created_at)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+            'INSERT INTO variantes (id, groupe_id, libelle, sku, quantite, seuil_alerte, active, location, prix_vente, created_at)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
         );
         foreach ($data['variantes'] as $v) {
             $insVariante->execute([
                 (int)$v['id'], (int)$v['groupe_id'], (string)$v['libelle'], $v['sku'] ?? null,
                 (int)($v['quantite'] ?? 0), $v['seuil_alerte'] ?? null, (int)($v['active'] ?? 1),
-                $v['location'] ?? null, (string)($v['created_at'] ?? date('c')),
+                $v['location'] ?? null, $v['prix_vente'] ?? null, (string)($v['created_at'] ?? date('c')),
             ]);
         }
 

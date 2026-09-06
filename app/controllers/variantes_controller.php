@@ -24,15 +24,19 @@ if ($route === 'variantes/create') {
         $seuilRaw = postString('seuil_alerte');
         $seuil = $seuilRaw === '' ? null : (int)$seuilRaw;
         $location = postString('location');
+        $prixRaw = trim(str_replace(',', '.', postString('prix_vente')));
+        $prix = $prixRaw === '' ? null : (float)$prixRaw;
 
         if (!isNonEmptyString($libelle, 100) || $quantite < 0) {
             $error = t('variantes_error_required');
+        } elseif ($prixRaw !== '' && (!is_numeric($prixRaw) || $prix < 0)) {
+            $error = t('variantes_error_price_invalid');
         } else {
             try {
                 $stmt = $db->prepare(
-                    'INSERT INTO variantes (groupe_id, libelle, quantite, seuil_alerte, location) VALUES (?, ?, ?, ?, ?)'
+                    'INSERT INTO variantes (groupe_id, libelle, quantite, seuil_alerte, location, prix_vente) VALUES (?, ?, ?, ?, ?, ?)'
                 );
-                $stmt->execute([$groupeId, $libelle, $quantite, $seuil, $location ?: null]);
+                $stmt->execute([$groupeId, $libelle, $quantite, $seuil, $location ?: null, $prix]);
                 $newVarianteId = (int)$db->lastInsertId();
                 logAudit('create', 'variante', $newVarianteId, $libelle);
 
@@ -78,15 +82,19 @@ if ($route === 'variantes/edit') {
         $seuil = $seuilRaw === '' ? null : (int)$seuilRaw;
         $active = postInt('active', 0) ? 1 : 0;
         $location = postString('location');
+        $prixRaw = trim(str_replace(',', '.', postString('prix_vente')));
+        $prix = $prixRaw === '' ? null : (float)$prixRaw;
 
         if (!isNonEmptyString($libelle, 100)) {
             $error = t('variantes_error_required_edit');
+        } elseif ($prixRaw !== '' && (!is_numeric($prixRaw) || $prix < 0)) {
+            $error = t('variantes_error_price_invalid');
         } else {
             try {
                 $upd = $db->prepare(
-                    'UPDATE variantes SET libelle = ?, seuil_alerte = ?, active = ?, location = ? WHERE id = ?'
+                    'UPDATE variantes SET libelle = ?, seuil_alerte = ?, active = ?, location = ?, prix_vente = ? WHERE id = ?'
                 );
-                $upd->execute([$libelle, $seuil, $active, $location ?: null, $id]);
+                $upd->execute([$libelle, $seuil, $active, $location ?: null, $prix, $id]);
                 flashSet('success', t('variantes_updated'));
                 redirect('groupes/show', ['id' => $variante['groupe_id']]);
             } catch (PDOException $e) {

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 const DEFAULT_PRIMARY_COLOR = '#2f6f4f';
 const DEFAULT_SITE_NAME = 'Stock Association';
+const DEFAULT_CURRENCY = 'CHF';
+const CURRENCY_CODES = ['CHF', 'EUR', 'USD', 'GBP'];
 
 function getSetting(string $key, ?string $default = null): ?string
 {
@@ -35,6 +37,19 @@ function deleteSetting(string $key): void
 function isValidHexColor(string $value): bool
 {
     return (bool)preg_match('/^#[0-9a-fA-F]{6}$/', $value);
+}
+
+function getCurrency(): string
+{
+    return getSetting('currency', DEFAULT_CURRENCY);
+}
+
+function formatPrice(null|int|float $amount): string
+{
+    if ($amount === null) {
+        return '';
+    }
+    return number_format((float)$amount, 2, '.', "'") . ' ' . getCurrency();
 }
 
 /**

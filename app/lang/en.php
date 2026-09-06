@@ -23,6 +23,8 @@ return [
     'th_total_qty' => 'Total quantity',
     'th_threshold' => 'Threshold',
     'th_location' => 'Location',
+    'th_price' => 'Unit price',
+    'th_value' => 'Value',
     'th_movement' => 'Movement',
     'th_by' => 'By',
     'th_reason' => 'Reason',
@@ -67,6 +69,7 @@ return [
     'dashboard_no_alerts' => 'No alerts, all good.',
     'dashboard_recent_movements' => 'Recent movements',
     'dashboard_no_movements' => 'No movement recorded.',
+    'dashboard_stat_value' => 'Total stock value',
 
     'types_page_title' => 'Inventory — Types',
     'types_new' => '+ New type',
@@ -98,6 +101,7 @@ return [
     'groupes_no_variants' => 'No variant for this group.',
     'groupes_recent_movements' => 'Recent movements',
     'groupes_view_all_history' => 'View full history',
+    'groupes_total_value_label' => 'Total stock value for this group',
 
     'variantes_form_title_edit' => 'Edit variant',
     'variantes_form_title_new' => 'New variant',
@@ -109,6 +113,9 @@ return [
     'variantes_location_label' => 'Location',
     'variantes_location_placeholder' => 'e.g. Storage 1',
     'variantes_location_hint' => 'Where this stock is physically located (visible to all users).',
+    'variantes_price_label' => 'Unit sale price (:currency)',
+    'variantes_price_placeholder' => 'e.g. 12.50',
+    'variantes_price_hint' => 'Sale price for one unit of this variant (optional, leave blank if not applicable).',
     'variantes_active_label' => 'Variant active',
 
     'mouvements_form_title' => 'Stock movement',
@@ -151,6 +158,12 @@ return [
     'settings_color_hint' => "Pick a preset color or a custom one to personalize the site's appearance.",
     'settings_color_free_label' => 'Custom color',
     'settings_color_reset' => 'Reset to default color',
+
+    'settings_currency_title' => 'Currency',
+    'settings_currency_hint' => 'Currency used to display variant sale prices.',
+    'settings_currency_label' => 'Currency',
+    'settings_currency_updated' => 'Currency updated.',
+    'settings_error_currency_invalid' => 'Invalid currency.',
 
     'settings_transfer_title' => 'Stock export / import',
     'settings_transfer_hint' => 'To move to another server or hosting provider: export the stock (types, groups, variants, images) to a file, then import it on the new installation. User accounts are not affected.',
@@ -203,6 +216,7 @@ return [
 
     'variantes_error_required' => 'The label is required and the quantity must be positive.',
     'variantes_error_required_edit' => 'The label is required.',
+    'variantes_error_price_invalid' => 'The sale price must be a positive number.',
     'variantes_error_duplicate' => 'This variant already exists for this group.',
     'variantes_created' => 'Variant ":libelle" created.',
     'variantes_updated' => 'Variant updated.',

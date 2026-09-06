@@ -10,6 +10,7 @@ function currentSettingsViewData(?string $error = null): array
         'primaryColor' => getSetting('primary_color', DEFAULT_PRIMARY_COLOR),
         'logoPath' => getSetting('logo_path'),
         'siteName' => getSetting('site_name', DEFAULT_SITE_NAME),
+        'currency' => getCurrency(),
     ];
 }
 
@@ -57,6 +58,17 @@ if ($route === 'settings/update') {
     if ($action === 'reset_name') {
         deleteSetting('site_name');
         flashSet('success', t('settings_name_reset_msg'));
+        redirect('settings');
+    }
+
+    if ($action === 'update_currency') {
+        $currency = postString('currency');
+        if (!in_array($currency, CURRENCY_CODES, true)) {
+            render('settings/index', currentSettingsViewData(t('settings_error_currency_invalid')));
+            exit;
+        }
+        setSetting('currency', $currency);
+        flashSet('success', t('settings_currency_updated'));
         redirect('settings');
     }
 

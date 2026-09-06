@@ -77,6 +77,22 @@
 </div>
 
 <div class="card">
+    <h2><?= e(t('settings_currency_title')) ?></h2>
+    <p class="field-hint"><?= e(t('settings_currency_hint')) ?></p>
+    <form method="post" action="/index.php?r=settings/update">
+        <?= csrfField() ?>
+        <input type="hidden" name="action" value="update_currency">
+        <label for="currency"><?= e(t('settings_currency_label')) ?></label>
+        <select id="currency" name="currency">
+            <?php foreach (CURRENCY_CODES as $code): ?>
+            <option value="<?= e($code) ?>" <?= $currency === $code ? 'selected' : '' ?>><?= e($code) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit" class="btn btn-primary"><?= e(t('common_save')) ?></button>
+    </form>
+</div>
+
+<div class="card">
     <h2><?= e(t('settings_transfer_title')) ?></h2>
     <p class="field-hint"><?= e(t('settings_transfer_hint')) ?></p>
     <div class="card__actions">

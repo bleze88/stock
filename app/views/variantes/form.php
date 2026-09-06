@@ -26,6 +26,10 @@
     <input type="text" id="location" name="location" maxlength="150" placeholder="<?= e(t('variantes_location_placeholder')) ?>" value="<?= e($variante['location'] ?? '') ?>">
     <p class="field-hint"><?= e(t('variantes_location_hint')) ?></p>
 
+    <label for="prix_vente"><?= e(t('variantes_price_label', ['currency' => getCurrency()])) ?></label>
+    <input type="number" id="prix_vente" name="prix_vente" min="0" step="0.05" placeholder="<?= e(t('variantes_price_placeholder')) ?>" value="<?= e($variante['prix_vente'] !== null && $variante['prix_vente'] !== '' ? (string)$variante['prix_vente'] : '') ?>">
+    <p class="field-hint"><?= e(t('variantes_price_hint')) ?></p>
+
     <?php if ($variante): ?>
     <label class="checkbox-label">
         <input type="checkbox" name="active" value="1" <?= $variante['active'] ? 'checked' : '' ?>>

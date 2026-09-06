@@ -58,14 +58,18 @@
 <div class="table-responsive">
 <div class="table-scroll">
 <table class="table">
-    <thead><tr><th><?= e(t('th_label')) ?></th><th><?= e(t('th_location')) ?></th><th><?= e(t('th_qty')) ?></th><th><?= e(t('th_threshold')) ?></th><th><?= e(t('th_actions')) ?></th></tr></thead>
+    <thead><tr><th><?= e(t('th_label')) ?></th><th><?= e(t('th_location')) ?></th><th><?= e(t('th_qty')) ?></th><th><?= e(t('th_threshold')) ?></th><th><?= e(t('th_price')) ?></th><th><?= e(t('th_value')) ?></th><th><?= e(t('th_actions')) ?></th></tr></thead>
     <tbody>
+    <?php $groupTotalValue = 0.0; $groupHasPrice = false; ?>
     <?php foreach ($variantes as $v): ?>
+        <?php if ($v['prix_vente'] !== null) { $groupHasPrice = true; $groupTotalValue += (float)$v['prix_vente'] * (int)$v['quantite']; } ?>
         <tr class="<?= $v['quantite'] <= ($v['seuil_alerte'] ?? $groupe['seuil_alerte']) ? 'table-row--warning' : '' ?>">
             <td><?= e($v['libelle']) ?></td>
             <td><?= e($v['location'] ?: '—') ?></td>
             <td><?= (int)$v['quantite'] ?></td>
             <td><?= (int)($v['seuil_alerte'] ?? $groupe['seuil_alerte']) ?></td>
+            <td><?= $v['prix_vente'] !== null ? e(formatPrice($v['prix_vente'])) : '—' ?></td>
+            <td><?= $v['prix_vente'] !== null ? e(formatPrice($v['prix_vente'] * $v['quantite'])) : '—' ?></td>
             <td class="table-actions">
                 <?php if ($canManage): ?>
                 <a class="btn btn-secondary" href="/index.php?r=mouvements/create&variante_id=<?= (int)$v['id'] ?>"><?= e(t('groupes_movement_btn')) ?></a>
@@ -80,7 +84,13 @@
         </tr>
     <?php endforeach; ?>
     <?php if (!$variantes): ?>
-        <tr><td colspan="5"><?= e(t('groupes_no_variants')) ?></td></tr>
+        <tr><td colspan="7"><?= e(t('groupes_no_variants')) ?></td></tr>
+    <?php endif; ?>
+    <?php if ($variantes && $groupHasPrice): ?>
+        <tr class="table-row--total">
+            <td colspan="5"><strong><?= e(t('groupes_total_value_label')) ?></strong></td>
+            <td colspan="2"><strong><?= e(formatPrice($groupTotalValue)) ?></strong></td>
+        </tr>
     <?php endif; ?>
     </tbody>
 </table>

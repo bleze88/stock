@@ -40,6 +40,9 @@ $recentMouvements = $canSeeHistory ? $db->query(
 
 $totalArticles = (int)$db->query('SELECT COALESCE(SUM(quantite), 0) AS n FROM variantes WHERE active = 1')->fetch()['n'];
 $totalGroupes = (int)$db->query('SELECT COUNT(*) AS n FROM groupes WHERE active = 1')->fetch()['n'];
+$totalStockValue = (float)$db->query(
+    "SELECT COALESCE(SUM(quantite * prix_vente), 0) AS n FROM variantes WHERE active = 1 AND prix_vente IS NOT NULL"
+)->fetch()['n'];
 
 render('dashboard/index', [
     'totalsByType' => $totalsByType,
@@ -48,4 +51,5 @@ render('dashboard/index', [
     'canSeeHistory' => $canSeeHistory,
     'totalArticles' => $totalArticles,
     'totalGroupes' => $totalGroupes,
+    'totalStockValue' => $totalStockValue,
 ]);

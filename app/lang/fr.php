@@ -25,6 +25,8 @@ return [
     'th_total_qty' => 'Quantité totale',
     'th_threshold' => 'Seuil',
     'th_location' => 'Emplacement',
+    'th_price' => 'Prix unitaire',
+    'th_value' => 'Valeur',
     'th_movement' => 'Mouvement',
     'th_by' => 'Par',
     'th_reason' => 'Motif',
@@ -73,6 +75,7 @@ return [
     'dashboard_no_alerts' => 'Aucune alerte, tout va bien.',
     'dashboard_recent_movements' => 'Mouvements récents',
     'dashboard_no_movements' => 'Aucun mouvement enregistré.',
+    'dashboard_stat_value' => 'Valeur totale du stock',
 
     // Types
     'types_page_title' => 'Inventaire — Types',
@@ -106,6 +109,7 @@ return [
     'groupes_no_variants' => 'Aucune variante pour ce groupe.',
     'groupes_recent_movements' => 'Mouvements récents',
     'groupes_view_all_history' => "Voir tout l'historique",
+    'groupes_total_value_label' => 'Valeur totale du stock de ce groupe',
 
     // Variantes
     'variantes_form_title_edit' => 'Modifier la variante',
@@ -118,6 +122,9 @@ return [
     'variantes_location_label' => 'Emplacement',
     'variantes_location_placeholder' => 'ex. Stock 1',
     'variantes_location_hint' => 'Indique où se trouve physiquement ce stock (visible par tous les utilisateurs).',
+    'variantes_price_label' => 'Prix de vente unitaire (:currency)',
+    'variantes_price_placeholder' => 'ex. 12.50',
+    'variantes_price_hint' => "Prix de vente d'une unité de cette variante (optionnel, laisser vide si non applicable).",
     'variantes_active_label' => 'Variante active',
 
     // Mouvements
@@ -163,6 +170,12 @@ return [
     'settings_color_hint' => 'Choisissez une couleur prédéfinie ou une couleur libre pour personnaliser l\'apparence du site.',
     'settings_color_free_label' => 'Couleur libre',
     'settings_color_reset' => 'Réinitialiser à la couleur par défaut',
+
+    'settings_currency_title' => 'Devise',
+    'settings_currency_hint' => "Devise utilisée pour l'affichage des prix de vente des variantes.",
+    'settings_currency_label' => 'Devise',
+    'settings_currency_updated' => 'Devise mise à jour.',
+    'settings_error_currency_invalid' => 'Devise invalide.',
 
     'settings_transfer_title' => 'Export / import du stock',
     'settings_transfer_hint' => "Pour changer de serveur ou de fournisseur d'hébergement : exportez le stock (types, groupes, variantes, images) dans un fichier, puis importez-le sur la nouvelle installation. Les comptes utilisateurs ne sont pas concernés.",
@@ -217,6 +230,7 @@ return [
 
     'variantes_error_required' => 'Le libellé est requis et la quantité doit être positive.',
     'variantes_error_required_edit' => 'Le libellé est requis.',
+    'variantes_error_price_invalid' => 'Le prix de vente doit être un nombre positif.',
     'variantes_error_duplicate' => 'Cette variante existe déjà pour ce groupe.',
     'variantes_created' => 'Variante « :libelle » créée.',
     'variantes_updated' => 'Variante mise à jour.',

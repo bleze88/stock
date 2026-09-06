@@ -25,9 +25,9 @@ if ($route === 'export/inventory') {
     }
     $writer->addSheet(t('export_sheet_total'), $totalRows);
 
-    // Un onglet par type : détail Groupe / Variante / Quantité / Seuil.
+    // Un onglet par type : détail Groupe / Variante / Quantité / Seuil / Prix / Valeur.
     $rows = $db->query(
-        "SELECT t.nom AS type_nom, g.nom AS groupe_nom, v.libelle, v.location,
+        "SELECT t.nom AS type_nom, g.nom AS groupe_nom, v.libelle, v.location, v.prix_vente,
                 v.quantite, COALESCE(v.seuil_alerte, g.seuil_alerte) AS seuil
          FROM variantes v
          JOIN groupes g ON v.groupe_id = g.id
@@ -36,14 +36,22 @@ if ($route === 'export/inventory') {
          ORDER BY t.nom, g.nom, v.libelle"
     )->fetchAll();
 
+    $currency = getCurrency();
     $byType = [];
     foreach ($rows as $r) {
         $byType[$r['type_nom']][] = $r;
     }
     foreach ($byType as $typeName => $typeRows) {
-        $sheetRows = [[t('th_group'), t('th_variant'), t('th_location'), t('th_qty'), t('th_threshold')]];
+        $sheetRows = [[
+            t('th_group'), t('th_variant'), t('th_location'), t('th_qty'), t('th_threshold'),
+            t('th_price') . ' (' . $currency . ')', t('th_value') . ' (' . $currency . ')',
+        ]];
         foreach ($typeRows as $r) {
-            $sheetRows[] = [$r['groupe_nom'], $r['libelle'], $r['location'] ?: '', (int)$r['quantite'], (int)$r['seuil']];
+            $prix = $r['prix_vente'] !== null ? (float)$r['prix_vente'] : null;
+            $sheetRows[] = [
+                $r['groupe_nom'], $r['libelle'], $r['location'] ?: '', (int)$r['quantite'], (int)$r['seuil'],
+                $prix ?? '', $prix !== null ? $prix * (int)$r['quantite'] : '',
+            ];
         }
         $writer->addSheet($typeName, $sheetRows);
     }
