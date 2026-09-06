@@ -9,9 +9,12 @@ if ($route === 'export/inventory') {
 
     $writer = new SimpleXlsxWriter();
 
+    $currency = getCurrency();
+
     // Onglet "Inventaire total" : résumé par type, comme le tableau de bord.
     $totalsByType = $db->query(
-        "SELECT t.nom AS type_nom, COUNT(DISTINCT g.id) AS nb_groupes, COALESCE(SUM(v.quantite), 0) AS total_quantite
+        "SELECT t.nom AS type_nom, COUNT(DISTINCT g.id) AS nb_groupes, COALESCE(SUM(v.quantite), 0) AS total_quantite,
+                COALESCE(SUM(v.quantite * v.prix_vente), 0) AS total_valeur
          FROM types t
          LEFT JOIN groupes g ON g.type_id = t.id AND g.active = 1
          LEFT JOIN variantes v ON v.groupe_id = g.id AND v.active = 1
@@ -19,10 +22,13 @@ if ($route === 'export/inventory') {
          ORDER BY t.nom"
     )->fetchAll();
 
-    $totalRows = [[t('th_type'), t('th_groups'), t('th_total_qty')]];
+    $totalRows = [[t('th_type'), t('th_groups'), t('th_total_qty'), t('th_value') . ' (' . $currency . ')']];
+    $grandTotalValue = 0.0;
     foreach ($totalsByType as $r) {
-        $totalRows[] = [$r['type_nom'], (int)$r['nb_groupes'], (int)$r['total_quantite']];
+        $totalRows[] = [$r['type_nom'], (int)$r['nb_groupes'], (int)$r['total_quantite'], (float)$r['total_valeur']];
+        $grandTotalValue += (float)$r['total_valeur'];
     }
+    $totalRows[] = [t('dashboard_stat_value'), '', '', $grandTotalValue];
     $writer->addSheet(t('export_sheet_total'), $totalRows);
 
     // Un onglet par type : détail Groupe / Variante / Quantité / Seuil / Prix / Valeur.
@@ -36,7 +42,6 @@ if ($route === 'export/inventory') {
          ORDER BY t.nom, g.nom, v.libelle"
     )->fetchAll();
 
-    $currency = getCurrency();
     $byType = [];
     foreach ($rows as $r) {
         $byType[$r['type_nom']][] = $r;
