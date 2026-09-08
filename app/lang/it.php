@@ -11,6 +11,8 @@ return [
     'common_yes' => 'Sì',
     'common_no' => 'No',
     'common_choose' => '— Scegliere —',
+    'search_placeholder' => 'Cerca...',
+    'search_no_results' => 'Nessun risultato per questa ricerca.',
 
     'th_date' => 'Data',
     'th_type' => 'Tipo',

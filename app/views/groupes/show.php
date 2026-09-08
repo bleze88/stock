@@ -55,15 +55,22 @@
 <?php if (!$variantes && $canManage): ?>
 <p class="flash flash--error"><?= e(t('groupes_no_variants_warning')) ?></p>
 <?php endif; ?>
+<?php if ($variantes): ?>
+<div class="search-bar">
+    <input type="search" placeholder="<?= e(t('search_placeholder')) ?>" aria-label="<?= e(t('search_placeholder')) ?>"
+           data-search-filter="#variantes-table tbody tr.variante-row" data-search-empty="#variantes-search-no-results">
+</div>
+<p id="variantes-search-no-results" class="field-hint" hidden><?= e(t('search_no_results')) ?></p>
+<?php endif; ?>
 <div class="table-responsive">
 <div class="table-scroll">
-<table class="table">
+<table class="table" id="variantes-table">
     <thead><tr><th><?= e(t('th_label')) ?></th><th><?= e(t('th_location')) ?></th><th><?= e(t('th_qty')) ?></th><th><?= e(t('th_threshold')) ?></th><th><?= e(t('th_price')) ?></th><th><?= e(t('th_value')) ?></th><th><?= e(t('th_actions')) ?></th></tr></thead>
     <tbody>
     <?php $groupTotalValue = 0.0; $groupHasPrice = false; ?>
     <?php foreach ($variantes as $v): ?>
         <?php if ($v['prix_vente'] !== null) { $groupHasPrice = true; $groupTotalValue += (float)$v['prix_vente'] * (int)$v['quantite']; } ?>
-        <tr class="<?= $v['quantite'] <= ($v['seuil_alerte'] ?? $groupe['seuil_alerte']) ? 'table-row--warning' : '' ?>">
+        <tr class="variante-row <?= $v['quantite'] <= ($v['seuil_alerte'] ?? $groupe['seuil_alerte']) ? 'table-row--warning' : '' ?>">
             <td><?= e($v['libelle']) ?></td>
             <td><?= e($v['location'] ?: '—') ?></td>
             <td><?= (int)$v['quantite'] ?></td>

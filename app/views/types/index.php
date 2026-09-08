@@ -9,6 +9,12 @@
     </div>
 </div>
 
+<div class="search-bar">
+    <input type="search" placeholder="<?= e(t('search_placeholder')) ?>" aria-label="<?= e(t('search_placeholder')) ?>"
+           data-search-filter=".card-grid > .card" data-search-empty="#search-no-results">
+</div>
+<p id="search-no-results" class="field-hint" hidden><?= e(t('search_no_results')) ?></p>
+
 <div class="card-grid">
 <?php foreach ($types as $t): ?>
     <div class="card">

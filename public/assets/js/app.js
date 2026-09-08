@@ -41,6 +41,27 @@
 })();
 
 (function () {
+    document.querySelectorAll('[data-search-filter]').forEach(function (input) {
+        var rows = Array.prototype.slice.call(document.querySelectorAll(input.dataset.searchFilter));
+        var emptyEl = input.dataset.searchEmpty ? document.querySelector(input.dataset.searchEmpty) : null;
+        input.addEventListener('input', function () {
+            var query = input.value.trim().toLowerCase();
+            var anyVisible = false;
+            rows.forEach(function (row) {
+                var match = query === '' || row.textContent.toLowerCase().indexOf(query) !== -1;
+                row.hidden = !match;
+                if (match) {
+                    anyVisible = true;
+                }
+            });
+            if (emptyEl) {
+                emptyEl.hidden = anyVisible;
+            }
+        });
+    });
+})();
+
+(function () {
     var colorInput = document.querySelector('[data-color-input]');
     var swatches = document.querySelectorAll('[data-color-presets] .color-swatch');
     if (!colorInput || !swatches.length) {

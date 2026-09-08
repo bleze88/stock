@@ -311,6 +311,23 @@ form textarea { min-height: 80px; }
 }
 .table tbody tr:last-child td { border-bottom: none; }
 .table tbody tr:hover { background: var(--color-bg); }
+.search-bar { margin-bottom: 16px; max-width: 360px; }
+.search-bar input[type=search] {
+    width: 100%;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    font-size: 1rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.search-bar input[type=search]:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-soft);
+    outline: none;
+}
 .table-row--warning, .table-row--warning:hover { background: var(--color-warning-bg); }
 .table-row--total, .table-row--total:hover { background: var(--color-bg); }
 .table-row--total td { border-top: 2px solid var(--color-border); }

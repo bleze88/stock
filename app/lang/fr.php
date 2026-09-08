@@ -12,6 +12,8 @@ return [
     'common_yes' => 'Oui',
     'common_no' => 'Non',
     'common_choose' => '— Choisir —',
+    'search_placeholder' => 'Rechercher...',
+    'search_no_results' => 'Aucun résultat pour cette recherche.',
 
     // En-têtes de tableau
     'th_date' => 'Date',

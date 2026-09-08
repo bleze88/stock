@@ -11,6 +11,8 @@ return [
     'common_yes' => 'Yes',
     'common_no' => 'No',
     'common_choose' => '— Choose —',
+    'search_placeholder' => 'Search...',
+    'search_no_results' => 'No results for this search.',
 
     'th_date' => 'Date',
     'th_type' => 'Type',
