@@ -99,15 +99,32 @@ function validateUploadedImage(array $file): array
         throw new UploadRejected(t('uploads_error_invalid_request'));
     }
 
+    return validateImageFile($file['tmp_name']);
+}
+
+/**
+ * Coeur de la validation d'image (MIME réel, genuine, dimensions raisonnables),
+ * sans les vérifications propres au mécanisme d'upload HTTP ($_FILES). Partagé
+ * entre l'upload normal (ci-dessus) et la réception d'une image par un autre
+ * canal (ex: import d'une archive de stock), toujours appliqué avant tout
+ * ré-encodage GD — jamais de confiance dans des octets reçus tels quels.
+ */
+function validateImageFile(string $path): array
+{
+    $size = @filesize($path);
+    if ($size === false || $size <= 0 || $size > UPLOAD_MAX_BYTES) {
+        throw new UploadRejected(t('uploads_error_too_large'));
+    }
+
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $mime = finfo_file($finfo, $file['tmp_name']);
+    $mime = finfo_file($finfo, $path);
     finfo_close($finfo);
 
     if (!isset(ALLOWED_IMAGE_MIME_EXT[$mime])) {
         throw new UploadRejected(t('uploads_error_invalid_type'));
     }
 
-    $imageInfo = @getimagesize($file['tmp_name']);
+    $imageInfo = @getimagesize($path);
     if ($imageInfo === false) {
         throw new UploadRejected(t('uploads_error_invalid_image'));
     }

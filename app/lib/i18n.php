@@ -49,6 +49,17 @@ function loadTranslations(string $locale): array
     return $cache[$locale];
 }
 
+/**
+ * Convention d'échappement : t() ne fait QUE de l'interpolation de texte, sans
+ * échapper quoi que ce soit — chaque appelant est responsable de passer le
+ * résultat dans e() avant de l'afficher (comme pour toute autre valeur).
+ * Vérifié (2026-10) : chaque appel de t() avec un paramètre utilisateur passe
+ * par e(t(...)) ou par le rendu des messages flash (qui échappe l'ensemble du
+ * message) — voir app/views/partials/flash.php. N'ajoutez jamais une chaîne
+ * de traduction combinant du HTML littéral avec un paramètre non échappé, et
+ * n'affichez jamais `<?= t(...) ?>` sans e() autour dès qu'un paramètre
+ * provient d'une donnée saisie par un utilisateur.
+ */
 function t(string $key, array $params = []): string
 {
     $locale = currentLocale();

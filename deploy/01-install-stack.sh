@@ -40,9 +40,15 @@ for INI in /etc/php/${PHP_VERSION}/fpm/php.ini /etc/php/${PHP_VERSION}/cli/php.i
   sed -i -E "s/^post_max_size = .*/post_max_size = 17M/" "$INI"
   sed -i -E "s/^memory_limit = .*/memory_limit = 256M/" "$INI"
   sed -i -E "s/^;?session.cookie_httponly = .*/session.cookie_httponly = 1/" "$INI"
+  sed -i -E "s/^;?session.cookie_secure = .*/session.cookie_secure = 1/" "$INI"
   sed -i -E "s/^;?session.cookie_samesite = .*/session.cookie_samesite = Lax/" "$INI"
   sed -i -E "s/^;?session.use_strict_mode = .*/session.use_strict_mode = 1/" "$INI"
-  sed -i -E "s/^disable_functions = .*/disable_functions = exec,passthru,shell_exec,system,proc_open,popen,curl_multi_exec,parse_ini_file,show_source/" "$INI"
+  sed -i -E "s/^;?disable_functions ?= ?.*/disable_functions = exec,passthru,shell_exec,system,proc_open,popen,curl_multi_exec,parse_ini_file,show_source,pcntl_exec/" "$INI"
+  # Filet de securite : si la directive n'existait pas du tout dans ce php.ini
+  # (variante selon la version/distribution), on l'ajoute explicitement plutot
+  # que de laisser le sed ci-dessus ne rien faire silencieusement.
+  grep -q '^disable_functions' "$INI" || echo "disable_functions = exec,passthru,shell_exec,system,proc_open,popen,curl_multi_exec,parse_ini_file,show_source,pcntl_exec" >> "$INI"
+  grep -q '^session.cookie_secure' "$INI" || echo "session.cookie_secure = 1" >> "$INI"
 done
 
 systemctl enable --now "php${PHP_VERSION}-fpm"

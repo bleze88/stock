@@ -143,7 +143,16 @@ class SimpleXlsxWriter
                 if (is_int($value) || is_float($value)) {
                     $xml .= '<c r="' . $cellRef . '"' . $styleAttr . '><v>' . $value . '</v></c>';
                 } else {
-                    $escaped = htmlspecialchars((string)$value, ENT_XML1 | ENT_QUOTES, 'UTF-8');
+                    $text = (string)$value;
+                    // Neutralise une éventuelle interprétation comme formule par le
+                    // tableur à l'ouverture (CSV/Excel "formula injection") si une
+                    // valeur provenant de l'utilisateur commence par un de ces
+                    // caractères — la cellule reste du texte littéral de toute façon,
+                    // ceci est une précaution supplémentaire.
+                    if ($text !== '' && strpbrk($text[0], '=+-@') !== false) {
+                        $text = "'" . $text;
+                    }
+                    $escaped = htmlspecialchars($text, ENT_XML1 | ENT_QUOTES, 'UTF-8');
                     $xml .= '<c r="' . $cellRef . '" t="inlineStr"' . $styleAttr . '><is><t xml:space="preserve">' . $escaped . '</t></is></c>';
                 }
             }

@@ -25,6 +25,7 @@ rsync -a "${REPO_ROOT}/app" "${REPO_ROOT}/public" "${REPO_ROOT}/bin" "${REPO_ROO
 mkdir -p "${APP_ROOT}/storage/database" "${APP_ROOT}/storage/uploads" "${APP_ROOT}/storage/logs" "${APP_ROOT}/public/media"
 chown -R www-data:www-data "${APP_ROOT}"
 chmod 750 "${APP_ROOT}/storage" "${APP_ROOT}/storage/database" "${APP_ROOT}/storage/uploads" "${APP_ROOT}/storage/logs"
+chmod +x "${APP_ROOT}"/scripts/*.sh
 
 echo "== Configuration Nginx pour ${DOMAIN} =="
 PHP_VERSION=$(php -v | head -1 | awk '{print $2}' | cut -d. -f1,2)

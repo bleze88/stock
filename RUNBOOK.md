@@ -45,6 +45,7 @@ rsync -az --rsync-path="sudo rsync" -e "ssh -i ~/.ssh/<votre-clé>" \
   app public bin scripts <utilisateur>@<ip-serveur>:/var/www/asso-stock/
 ssh -i ~/.ssh/<votre-clé> <utilisateur>@<ip-serveur> '
   sudo find /var/www/asso-stock/app /var/www/asso-stock/public /var/www/asso-stock/bin /var/www/asso-stock/scripts -exec chown www-data:www-data {} +
+  sudo chmod +x /var/www/asso-stock/scripts/*.sh
   sudo -u www-data php /var/www/asso-stock/app/migrations/migrate.php
 '
 ```

@@ -11,6 +11,9 @@ define('BACKUPS_PATH', STORAGE_PATH . '/backups');
 
 // Taille max d'une archive d'export/import du stock (données + images) : bien
 // au-dessus d'un usage normal, juste un garde-fou anti "bombe de décompression".
+// Utilisée à la fois pour la taille de l'upload (compressé) et pour le total
+// cumulé des images une fois décompressées, vérifié avant toute lecture en
+// mémoire via les métadonnées du ZIP (voir importStockZip()).
 define('STOCK_TRANSFER_MAX_BYTES', 200 * 1024 * 1024);
 
 define('SESSION_COOKIE_NAME', 'asso_sess');

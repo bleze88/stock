@@ -106,28 +106,60 @@ function importStockZip(string $zipPath): array
     }
 
     // Valide chaque chemin d'image (format strict, jamais de traversée de
-    // répertoire) et vérifie que le fichier correspondant est bien dans l'archive.
-    foreach ($data['images'] as $img) {
-        $orig = $img['original_path'] ?? '';
-        if (!is_string($orig) || !preg_match(STOCK_IMAGE_PATH_PATTERN, $orig)) {
-            $zip->close();
-            throw new RuntimeException(t('stock_import_error_invalid_data'));
-        }
-        if ($zip->locateName('uploads/' . $orig) === false) {
-            $zip->close();
-            throw new RuntimeException(t('stock_import_error_missing_file', ['file' => $orig]));
-        }
-        $thumb = $img['thumb_path'] ?? null;
-        if ($thumb !== null) {
-            if (!is_string($thumb) || !preg_match(STOCK_IMAGE_PATH_PATTERN, $thumb)) {
-                $zip->close();
+    // répertoire), vérifie que l'original est bien dans l'archive, et extrait +
+    // valide son contenu réel (MIME, dimensions) AVANT tout traitement ultérieur.
+    // La vignette n'est jamais lue depuis l'archive : elle est régénérée depuis
+    // l'original validé, exactement comme un upload normal — on ne fait jamais
+    // confiance à des octets d'image reçus tels quels. La taille de chaque
+    // entrée est lue depuis les métadonnées du ZIP (statName) avant toute
+    // décompression, et cumulée, pour écarter une archive "bombe" sans jamais
+    // décompresser plus que nécessaire en mémoire.
+    $tmpImportDir = sys_get_temp_dir() . '/stockimport-' . bin2hex(random_bytes(8));
+    if (!mkdir($tmpImportDir, 0700, true)) {
+        $zip->close();
+        throw new RuntimeException(t('stock_import_error_database', ['error' => 'tmp dir']));
+    }
+    $extractedOriginals = [];
+    $totalUncompressedBytes = 0;
+
+    try {
+        foreach ($data['images'] as $img) {
+            $orig = $img['original_path'] ?? '';
+            if (!is_string($orig) || !preg_match(STOCK_IMAGE_PATH_PATTERN, $orig)) {
                 throw new RuntimeException(t('stock_import_error_invalid_data'));
             }
-            if ($zip->locateName('media/' . $thumb) === false) {
-                $zip->close();
-                throw new RuntimeException(t('stock_import_error_missing_file', ['file' => $thumb]));
+            $thumb = $img['thumb_path'] ?? null;
+            if ($thumb !== null && (!is_string($thumb) || !preg_match(STOCK_IMAGE_PATH_PATTERN, $thumb))) {
+                throw new RuntimeException(t('stock_import_error_invalid_data'));
             }
+
+            $stat = $zip->statName('uploads/' . $orig);
+            if ($stat === false) {
+                throw new RuntimeException(t('stock_import_error_missing_file', ['file' => $orig]));
+            }
+            if ($stat['size'] > UPLOAD_MAX_BYTES) {
+                throw new RuntimeException(t('uploads_error_too_large'));
+            }
+            $totalUncompressedBytes += $stat['size'];
+            if ($totalUncompressedBytes > STOCK_TRANSFER_MAX_BYTES) {
+                throw new RuntimeException(t('uploads_error_too_large'));
+            }
+
+            $tmpPath = $tmpImportDir . '/' . bin2hex(random_bytes(8));
+            file_put_contents($tmpPath, $zip->getFromName('uploads/' . $orig));
+            $validated = validateImageFile($tmpPath);
+            $extractedOriginals[$orig] = ['tmp' => $tmpPath, 'mime' => $validated['mime']];
         }
+    } catch (UploadRejected $e) {
+        removeDirectoryContents($tmpImportDir);
+        @rmdir($tmpImportDir);
+        $zip->close();
+        throw new RuntimeException($e->getMessage());
+    } catch (RuntimeException $e) {
+        removeDirectoryContents($tmpImportDir);
+        @rmdir($tmpImportDir);
+        $zip->close();
+        throw $e;
     }
 
     // Filet de sécurité : capture l'état actuel avant de le remplacer.
@@ -201,24 +233,34 @@ function importStockZip(string $zipPath): array
         throw new RuntimeException(t('stock_import_error_database', ['error' => $e->getMessage()]));
     }
 
-    // Remplace les fichiers images sur le disque par ceux de l'archive.
+    // Remplace les fichiers images sur le disque par ceux de l'archive, en
+    // repassant chaque original par le même pipeline GD (décodage + ré-encodage)
+    // qu'un upload normal, et en régénérant la vignette depuis l'original validé
+    // plutôt que de faire confiance aux octets de vignette de l'archive.
     removeDirectoryContents(UPLOADS_PATH . '/groupes');
     removeDirectoryContents(PUBLIC_MEDIA_PATH . '/groupes');
 
     foreach ($data['images'] as $img) {
+        $extracted = $extractedOriginals[$img['original_path']];
+        $source = loadImageResource($extracted['tmp'], $extracted['mime']);
+
         $origDest = UPLOADS_PATH . '/' . $img['original_path'];
         ensureDir(dirname($origDest), 0750);
-        file_put_contents($origDest, $zip->getFromName('uploads/' . $img['original_path']));
+        resizeAndSaveJpeg($source, STORED_MAX_DIMENSION, $origDest, STORED_JPEG_QUALITY);
         chmod($origDest, 0640);
 
         if (!empty($img['thumb_path'])) {
             $thumbDest = PUBLIC_MEDIA_PATH . '/' . $img['thumb_path'];
             ensureDir(dirname($thumbDest), 0755);
-            file_put_contents($thumbDest, $zip->getFromName('media/' . $img['thumb_path']));
+            resizeAndSaveJpeg($source, THUMB_MAX_DIMENSION, $thumbDest, THUMB_JPEG_QUALITY);
             chmod($thumbDest, 0644);
         }
+
+        imagedestroy($source);
     }
 
+    removeDirectoryContents($tmpImportDir);
+    @rmdir($tmpImportDir);
     $zip->close();
 
     return [
