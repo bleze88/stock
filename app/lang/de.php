@@ -38,6 +38,8 @@ return [
     'th_active' => 'Aktiv',
     'th_last_login' => 'Letzte Anmeldung',
 
+    'nav_menu_label' => 'Menü',
+    'skip_to_content' => 'Zum Inhalt springen',
     'nav_dashboard' => 'Übersicht',
     'nav_inventory' => 'Inventar',
     'nav_history' => 'Verlauf',
@@ -95,6 +97,7 @@ return [
     'groupes_images_title' => 'Bilder',
     'groupes_confirm_delete_image' => 'Dieses Bild löschen?',
     'groupes_no_images' => 'Keine Bilder für diese Gruppe.',
+    'groupes_image_alt' => ':nom (Foto :num/:total)',
     'groupes_add_images_label' => 'Bilder hinzufügen (JPEG/PNG/WebP, je max. 16 MB)',
     'groupes_variants_title' => 'Varianten',
     'groupes_add_variant' => '+ Variante',
@@ -118,6 +121,7 @@ return [
     'variantes_price_label' => 'Verkaufspreis pro Einheit (:currency)',
     'variantes_price_placeholder' => 'z. B. 12.50',
     'variantes_price_hint' => 'Verkaufspreis für eine Einheit dieser Variante (optional, leer lassen, falls nicht zutreffend).',
+    'variantes_price_not_set' => 'Kein Preis für diese Variante hinterlegt',
     'variantes_active_label' => 'Variante aktiv',
 
     'mouvements_form_title' => 'Lagerbewegung',
@@ -268,6 +272,8 @@ return [
     'account_error_fullname_required' => 'Der vollständige Name ist erforderlich.',
     'nav_audit' => 'Aktivitätsprotokoll',
     'types_confirm_delete' => 'Diesen Typ löschen? Diese Aktion ist endgültig.',
+    'types_confirm_delete_title' => 'Löschung bestätigen',
+    'types_confirm_delete_warning' => 'Sie sind dabei, den Typ „:nom" endgültig zu löschen. Diese Aktion kann nicht rückgängig gemacht werden (blockiert, falls für diesen Typ noch Gruppen bestehen).',
     'types_error_has_groups' => 'Löschen nicht möglich: Für diesen Typ bestehen (oder bestanden) noch Gruppen.',
     'types_deleted' => 'Typ „:nom" gelöscht.',
     'groupes_confirm_delete' => 'Diese Gruppe löschen? Diese Aktion ist endgültig (Bilder und Verlauf bleiben im Aktivitätsprotokoll einsehbar).',

@@ -17,8 +17,9 @@
 <?php endif; ?>
 </head>
 <body>
+<a class="skip-link" href="#main-content"><?= e(t('skip_to_content')) ?></a>
 <?php require APP_PATH . '/views/partials/nav.php'; ?>
-<main class="container">
+<main class="container" id="main-content">
 <?php require APP_PATH . '/views/partials/flash.php'; ?>
 <?php require $viewFile; ?>
 </main>

@@ -3,7 +3,7 @@
     <?php if ($error): ?>
     <p class="flash flash--error"><?= e($error) ?></p>
     <?php endif; ?>
-    <form method="post" action="/index.php?r=login" novalidate>
+    <form method="post" action="/index.php?r=login">
         <?= csrfField() ?>
         <label for="username"><?= e(t('login_username')) ?></label>
         <input type="text" id="username" name="username" autocomplete="username" required autofocus>

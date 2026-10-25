@@ -41,6 +41,8 @@ return [
     'th_last_login' => 'Dernière connexion',
 
     // Navigation
+    'nav_menu_label' => 'Menu',
+    'skip_to_content' => 'Aller au contenu',
     'nav_dashboard' => 'Tableau de bord',
     'nav_inventory' => 'Inventaire',
     'nav_history' => 'Historique',
@@ -103,6 +105,7 @@ return [
     'groupes_images_title' => 'Images',
     'groupes_confirm_delete_image' => 'Supprimer cette image ?',
     'groupes_no_images' => 'Aucune image pour ce groupe.',
+    'groupes_image_alt' => ':nom (photo :num/:total)',
     'groupes_add_images_label' => 'Ajouter des images (JPEG/PNG/WebP, 16 Mo max chacune)',
     'groupes_variants_title' => 'Variantes',
     'groupes_add_variant' => '+ Variante',
@@ -127,6 +130,7 @@ return [
     'variantes_price_label' => 'Prix de vente unitaire (:currency)',
     'variantes_price_placeholder' => 'ex. 12.50',
     'variantes_price_hint' => "Prix de vente d'une unité de cette variante (optionnel, laisser vide si non applicable).",
+    'variantes_price_not_set' => 'Aucun prix renseigné pour cette variante',
     'variantes_active_label' => 'Variante active',
 
     // Mouvements
@@ -282,6 +286,8 @@ return [
     'account_error_fullname_required' => 'Le nom complet est requis.',
     'nav_audit' => 'Journal d\'activité',
     'types_confirm_delete' => 'Supprimer ce type ? Cette action est définitive.',
+    'types_confirm_delete_title' => 'Confirmer la suppression',
+    'types_confirm_delete_warning' => 'Vous êtes sur le point de supprimer définitivement le type « :nom ». Cette action est irréversible (bloquée si des groupes existent encore pour ce type).',
     'types_error_has_groups' => 'Impossible de supprimer : des groupes existent (ou ont existé) pour ce type.',
     'types_deleted' => 'Type « :nom » supprimé.',
     'groupes_confirm_delete' => 'Supprimer ce groupe ? Cette action est définitive (les images et l\'historique resteront consultables dans le journal).',

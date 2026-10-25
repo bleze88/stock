@@ -1,12 +1,19 @@
 <h1><?= e(t('audit_title')) ?></h1>
 
+<?php if ($entries): ?>
+<div class="search-bar">
+    <input type="search" placeholder="<?= e(t('search_placeholder')) ?>" aria-label="<?= e(t('search_placeholder')) ?>"
+           data-search-filter="#audit-table tbody tr.audit-row" data-search-empty="#audit-search-no-results">
+</div>
+<p id="audit-search-no-results" class="field-hint" hidden><?= e(t('search_no_results')) ?></p>
+<?php endif; ?>
 <div class="table-responsive">
 <div class="table-scroll">
-<table class="table">
+<table class="table" id="audit-table">
     <thead><tr><th><?= e(t('th_date')) ?></th><th><?= e(t('th_action')) ?></th><th><?= e(t('th_entity')) ?></th><th><?= e(t('th_label')) ?></th><th><?= e(t('th_by')) ?></th></tr></thead>
     <tbody>
     <?php foreach ($entries as $entry): ?>
-        <tr>
+        <tr class="audit-row">
             <td><?= e($entry['created_at']) ?></td>
             <td class="<?= $entry['action'] === 'delete' ? 'text-danger' : 'text-success' ?>">
                 <?= $entry['action'] === 'delete' ? e(t('audit_action_delete')) : e(t('audit_action_create')) ?>

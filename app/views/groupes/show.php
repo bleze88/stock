@@ -19,9 +19,10 @@
 
 <h2><?= e(t('groupes_images_title')) ?></h2>
 <div class="image-grid">
-<?php foreach ($images as $img): ?>
+<?php $imageCount = count($images); ?>
+<?php foreach ($images as $i => $img): ?>
     <div class="image-tile">
-        <img src="/media/<?= e($img['thumb_path']) ?>" alt="<?= e($groupe['nom']) ?>" loading="lazy">
+        <img src="/media/<?= e($img['thumb_path']) ?>" alt="<?= e(t('groupes_image_alt', ['nom' => $groupe['nom'], 'num' => $i + 1, 'total' => $imageCount])) ?>" loading="lazy">
         <?php if ($canManage): ?>
         <form method="post" action="/index.php?r=images/delete" class="inline-form" data-confirm="<?= e(t('groupes_confirm_delete_image')) ?>">
             <?= csrfField() ?>
@@ -75,8 +76,8 @@
             <td><?= e($v['location'] ?: '—') ?></td>
             <td><?= (int)$v['quantite'] ?></td>
             <td><?= (int)($v['seuil_alerte'] ?? $groupe['seuil_alerte']) ?></td>
-            <td><?= $v['prix_vente'] !== null ? e(formatPrice($v['prix_vente'])) : '—' ?></td>
-            <td><?= $v['prix_vente'] !== null ? e(formatPrice($v['prix_vente'] * $v['quantite'])) : '—' ?></td>
+            <td><?= $v['prix_vente'] !== null ? e(formatPrice($v['prix_vente'])) : '<span title="' . e(t('variantes_price_not_set')) . '">—</span>' ?></td>
+            <td><?= $v['prix_vente'] !== null ? e(formatPrice($v['prix_vente'] * $v['quantite'])) : '<span title="' . e(t('variantes_price_not_set')) . '">—</span>' ?></td>
             <td class="table-actions">
                 <?php if ($canManage): ?>
                 <a class="btn btn-secondary" href="/index.php?r=mouvements/create&variante_id=<?= (int)$v['id'] ?>"><?= e(t('groupes_movement_btn')) ?></a>

@@ -38,6 +38,8 @@ return [
     'th_active' => 'Active',
     'th_last_login' => 'Last login',
 
+    'nav_menu_label' => 'Menu',
+    'skip_to_content' => 'Skip to content',
     'nav_dashboard' => 'Dashboard',
     'nav_inventory' => 'Inventory',
     'nav_history' => 'History',
@@ -95,6 +97,7 @@ return [
     'groupes_images_title' => 'Images',
     'groupes_confirm_delete_image' => 'Delete this image?',
     'groupes_no_images' => 'No images for this group.',
+    'groupes_image_alt' => ':nom (photo :num/:total)',
     'groupes_add_images_label' => 'Add images (JPEG/PNG/WebP, 16 MB max each)',
     'groupes_variants_title' => 'Variants',
     'groupes_add_variant' => '+ Variant',
@@ -118,6 +121,7 @@ return [
     'variantes_price_label' => 'Unit sale price (:currency)',
     'variantes_price_placeholder' => 'e.g. 12.50',
     'variantes_price_hint' => 'Sale price for one unit of this variant (optional, leave blank if not applicable).',
+    'variantes_price_not_set' => 'No price set for this variant',
     'variantes_active_label' => 'Variant active',
 
     'mouvements_form_title' => 'Stock movement',
@@ -268,6 +272,8 @@ return [
     'account_error_fullname_required' => 'Full name is required.',
     'nav_audit' => 'Activity log',
     'types_confirm_delete' => 'Delete this type? This action is permanent.',
+    'types_confirm_delete_title' => 'Confirm deletion',
+    'types_confirm_delete_warning' => 'You are about to permanently delete the type ":nom". This action cannot be undone (blocked if groups still exist for this type).',
     'types_error_has_groups' => 'Cannot delete: groups exist (or have existed) for this type.',
     'types_deleted' => 'Type ":nom" deleted.',
     'groupes_confirm_delete' => 'Delete this group? This action is permanent (images and history will remain viewable in the activity log).',

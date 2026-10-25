@@ -33,6 +33,13 @@
             var atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
             wrapper.classList.toggle('can-scroll-right', scrollable && !atEnd);
             wrapper.classList.toggle('can-scroll-left', scrollable && !atStart);
+            // Rend le conteneur atteignable/scrollable au clavier uniquement
+            // quand il y a effectivement quelque chose à scroller.
+            if (scrollable) {
+                el.setAttribute('tabindex', '0');
+            } else {
+                el.removeAttribute('tabindex');
+            }
         }
         update();
         el.addEventListener('scroll', update);

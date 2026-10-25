@@ -87,18 +87,27 @@ if ($route === 'types/edit') {
 
 if ($route === 'types/delete') {
     requireAnyRole([ROLE_ADMIN, ROLE_MANAGER]);
-    if (!isPost()) {
-        redirect('types');
-    }
-    csrfVerify();
 
-    $id = postInt('id');
+    $id = isPost() ? postInt('id') : getInt('id');
     $stmt = $db->prepare('SELECT * FROM types WHERE id = ?');
     $stmt->execute([$id]);
     $type = $stmt->fetch();
     if (!$type) {
         http_response_code(404);
         render('errors/404', []);
+        exit;
+    }
+
+    if (!isPost()) {
+        render('types/confirm_delete', ['type' => $type, 'error' => null]);
+        exit;
+    }
+
+    csrfVerify();
+
+    $typed = mb_strtoupper(trim(postString('confirm_word')));
+    if ($typed !== mb_strtoupper(t('users_delete_confirm_word'))) {
+        render('types/confirm_delete', ['type' => $type, 'error' => t('users_error_confirm_word_mismatch')]);
         exit;
     }
 

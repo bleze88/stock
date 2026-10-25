@@ -1,12 +1,19 @@
 <h1><?= e(t('mouvements_history_title')) ?></h1>
 
+<?php if ($mouvements): ?>
+<div class="search-bar">
+    <input type="search" placeholder="<?= e(t('search_placeholder')) ?>" aria-label="<?= e(t('search_placeholder')) ?>"
+           data-search-filter="#mouvements-table tbody tr.mouvement-row" data-search-empty="#mouvements-search-no-results">
+</div>
+<p id="mouvements-search-no-results" class="field-hint" hidden><?= e(t('search_no_results')) ?></p>
+<?php endif; ?>
 <div class="table-responsive">
 <div class="table-scroll">
-<table class="table">
+<table class="table" id="mouvements-table">
     <thead><tr><th><?= e(t('th_date')) ?></th><th><?= e(t('th_group')) ?></th><th><?= e(t('th_variant')) ?></th><th><?= e(t('th_movement')) ?></th><th><?= e(t('th_qty_after')) ?></th><th><?= e(t('th_by')) ?></th><th><?= e(t('th_reason')) ?></th></tr></thead>
     <tbody>
     <?php foreach ($mouvements as $m): ?>
-        <tr>
+        <tr class="mouvement-row">
             <td><?= e($m['created_at']) ?></td>
             <td><a href="/index.php?r=groupes/show&id=<?= (int)$m['groupe_id'] ?>"><?= e($m['groupe_nom']) ?></a></td>
             <td><?= e($m['variante_libelle']) ?></td>

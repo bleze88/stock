@@ -38,6 +38,8 @@ return [
     'th_active' => 'Attivo',
     'th_last_login' => 'Ultimo accesso',
 
+    'nav_menu_label' => 'Menu',
+    'skip_to_content' => 'Vai al contenuto',
     'nav_dashboard' => 'Cruscotto',
     'nav_inventory' => 'Inventario',
     'nav_history' => 'Cronologia',
@@ -95,6 +97,7 @@ return [
     'groupes_images_title' => 'Immagini',
     'groupes_confirm_delete_image' => 'Eliminare questa immagine?',
     'groupes_no_images' => 'Nessuna immagine per questo gruppo.',
+    'groupes_image_alt' => ':nom (foto :num/:total)',
     'groupes_add_images_label' => 'Aggiungi immagini (JPEG/PNG/WebP, max 16 MB ciascuna)',
     'groupes_variants_title' => 'Varianti',
     'groupes_add_variant' => '+ Variante',
@@ -118,6 +121,7 @@ return [
     'variantes_price_label' => 'Prezzo di vendita unitario (:currency)',
     'variantes_price_placeholder' => 'es. 12.50',
     'variantes_price_hint' => 'Prezzo di vendita di una unità di questa variante (opzionale, lasciare vuoto se non applicabile).',
+    'variantes_price_not_set' => 'Nessun prezzo impostato per questa variante',
     'variantes_active_label' => 'Variante attiva',
 
     'mouvements_form_title' => 'Movimento di magazzino',
@@ -268,6 +272,8 @@ return [
     'account_error_fullname_required' => 'Il nome completo è obbligatorio.',
     'nav_audit' => 'Registro attività',
     'types_confirm_delete' => 'Eliminare questo tipo? Questa azione è definitiva.',
+    'types_confirm_delete_title' => 'Conferma eliminazione',
+    'types_confirm_delete_warning' => 'Stai per eliminare definitivamente il tipo «:nom». Questa azione è irreversibile (bloccata se esistono ancora gruppi per questo tipo).',
     'types_error_has_groups' => 'Impossibile eliminare: esistono (o sono esistiti) gruppi per questo tipo.',
     'types_deleted' => 'Tipo «:nom» eliminato.',
     'groupes_confirm_delete' => 'Eliminare questo gruppo? Questa azione è definitiva (immagini e cronologia resteranno consultabili nel registro attività).',

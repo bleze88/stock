@@ -12,7 +12,7 @@ $navSiteName = getSetting('site_name', DEFAULT_SITE_NAME);
             <span><?= e($navSiteName) ?></span>
         </a>
         <?php if ($navUser): ?>
-        <button type="button" class="nav-toggle" aria-label="Menu" aria-expanded="false" data-nav-toggle>
+        <button type="button" class="nav-toggle" aria-label="<?= e(t('nav_menu_label')) ?>" aria-expanded="false" data-nav-toggle>
             <span></span><span></span><span></span>
         </button>
         <?php endif; ?>

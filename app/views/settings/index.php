@@ -58,7 +58,7 @@
         ?>
         <?php foreach ($presets as $slug => [$hex, $label]): ?>
         <button type="button" class="color-swatch color-swatch--<?= e($slug) ?>"
-                title="<?= e($label) ?>" data-color="<?= e($hex) ?>"></button>
+                title="<?= e($label) ?>" aria-label="<?= e($label) ?>" data-color="<?= e($hex) ?>"></button>
         <?php endforeach; ?>
     </div>
 

@@ -24,11 +24,7 @@
             <?php if ($canManage): ?>
             <a class="btn btn-secondary" href="/index.php?r=groupes/create&type_id=<?= (int)$t['id'] ?>"><?= e(t('types_add_group')) ?></a>
             <a class="btn btn-secondary" href="/index.php?r=types/edit&id=<?= (int)$t['id'] ?>"><?= e(t('common_edit')) ?></a>
-            <form method="post" action="/index.php?r=types/delete" class="inline-form" data-confirm="<?= e(t('types_confirm_delete')) ?>">
-                <?= csrfField() ?>
-                <input type="hidden" name="id" value="<?= (int)$t['id'] ?>">
-                <button type="submit" class="btn btn-secondary btn-danger"><?= e(t('common_delete')) ?></button>
-            </form>
+            <a class="btn btn-secondary btn-danger" href="/index.php?r=types/delete&id=<?= (int)$t['id'] ?>"><?= e(t('common_delete')) ?></a>
             <?php endif; ?>
         </div>
         <?php $groupesDuType = $groupesByType[$t['id']] ?? []; ?>
