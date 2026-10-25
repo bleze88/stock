@@ -150,6 +150,20 @@ function importStockZip(string $zipPath): array
             $validated = validateImageFile($tmpPath);
             $extractedOriginals[$orig] = ['tmp' => $tmpPath, 'mime' => $validated['mime']];
         }
+
+        // Mêmes règles que les formulaires normaux : quantité et prix de vente
+        // ne peuvent pas être négatifs (une archive trafiquée ou un export
+        // corrompu ne doit pas pouvoir fausser silencieusement le stock).
+        foreach ($data['variantes'] as $v) {
+            $qty = $v['quantite'] ?? 0;
+            if (!is_numeric($qty) || (int)$qty < 0) {
+                throw new RuntimeException(t('stock_import_error_invalid_data'));
+            }
+            $prix = $v['prix_vente'] ?? null;
+            if ($prix !== null && (!is_numeric($prix) || (float)$prix < 0)) {
+                throw new RuntimeException(t('stock_import_error_invalid_data'));
+            }
+        }
     } catch (UploadRejected $e) {
         removeDirectoryContents($tmpImportDir);
         @rmdir($tmpImportDir);
